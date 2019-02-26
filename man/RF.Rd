@@ -1,7 +1,7 @@
 \name{RF}
 \alias{RF}
 \title{
-Redundancy filtering of  a square (correlation) matrix
+Redundancy filtering of a square (correlation) matrix
 }
 \description{
 Function that performs redundancy filtering (RF) of a square (correlation) matrix.
@@ -9,29 +9,33 @@ Function that performs redundancy filtering (RF) of a square (correlation) matri
 \usage{
 RF(R, t = .9)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{
-%%     ~~Describe \code{x} here~~
-}
+  \item{R}{
+  Square (correlation) \code{matrix}.
+  }
+  \item{t}{
+  A scalar \code{numeric} indicating the absolute value for thresholding.
+  }
 }
 \details{
-Correlation matrices can have collinearity.
-This collinearity can be so strong as to border on redundancy.
-Hence, redundant features can be removed.
+Radiomic features can be very strongly correlated.
+The sample correlation matrix on extracted radiomic features will then often dislay strong collinearity.
+The collinearity may be so strong as to imply redundant information, in the sense that some entries will approach perfect (negative) correlation. 
+Hence, one may wish to perform redundancy-filtering on the raw sample correlation matrix in such situations.
 
-Uses algorithm developed in Peeters et al.
-See SM of Peeters.
+The \code{RF} function uses an Algorithm from Peeters \emph{et al.} (2019) to remove the minimal number of redundant features under absolute marginal correlation threshold \code{t}.
+We recommend setting \eqn{\mathrm{t} \in [.9,.95]}.
+Details of the algorithm can be found in Peeters \emph{et al.} (2019).
+
+The function returns a redundancy-filtered correlation \code{matrix}.
+This return output may subsequently be used in the \code{\link{subSet}} function.
+This is a convenience function that subsets a dataset to the features retained after redundancy-filtering.
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+Returns a redundancy-filtered \code{matrix}.
 }
 \references{
-%% ~put references to the literature/web site here ~ Own paper should go here.
+Peeters, C.F.W. \emph{et al.} (2019). Stable prediction with radiomics data.
 }
 \author{
 Carel F.W. Peeters <cf.peeters@vumc.nl>
@@ -43,67 +47,23 @@ Carel F.W. Peeters <cf.peeters@vumc.nl>
 }
 }
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~ SubSet convenience function
+\code{\link{subSet}}, \code{\link{regcor}}
 }
 \examples{
-EXAMPLE where heatmap is used to check the redundancy filtering
+## Generate some (high-dimensional) data
+## Get correlation matrix
+p = 25
+n = 10
+set.seed(333)
+X = matrix(rnorm(n*p), nrow = n, ncol = p)
+colnames(X)[1:25] = letters[1:25]
+R <- cor(X)
+
+## Redundancy visualization, at threshold value .9
+radioHeat(R, diag = FALSE, threshold = TRUE, threshvalue = .9)
+
+## Redundancy-filtering of correlation matrix
+Rfilter <- RF(R, t = .9)
+dim(Rfilter)
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
-
-
-
-
-
-RF <- function(R, t = .9){
-  ##############################################################################
-  # Performs redundancy filtering (RF) of square (correlation) matrix
-  # R > (correlation) matrix
-  # t > absolute value for thresholding
-  #
-  # NOTES:
-  # - When the input matrix R is a correlation matrix, then t should satisfy
-  #   -1 < t < 1, for the return matrix to be sensical for further analysis
-  ##############################################################################
-  
-  # Dependencies:
-  # require("base")
-  
-  # Checks
-  if (!is.matrix(R)){
-    stop("Input (R) should be a matrix")
-  }
-  if (nrow(R) != ncol(R)){
-    stop("Input (R) should be square matrix")
-  }
-  if (class(t) != "numeric"){
-    stop("Input (t) is of wrong class")
-  }
-  if (length(t) != 1){
-    stop("Length input (t) must be one")
-  }
-  
-  # Needed
-  GO = TRUE
-  HM <- numeric()
-  
-  # Loop
-  while(GO){
-    for(j in 1:dim(R)[1]){
-      HM[j] <- sum(abs(R[j,, drop = FALSE]) >= t)
-    }
-    Mx <- which(HM == max(HM))
-    if(max(HM) < 2){
-      GO = FALSE
-    } else {
-      R  <- R[-Mx[1],-Mx[1]]
-      HM <- numeric()
-    }
-  }
-  
-  # Return
-  return(R)
-}
-
+\concept{redundancy-filtering}
