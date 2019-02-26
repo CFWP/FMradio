@@ -1,0 +1,14 @@
+Package: FMradio
+Type: Package
+Title: Factor Modeling for radiomics data
+Version: 1
+Maintainer: Carel F.W. Peeters <cf.peeters@vumc.nl>
+Author: Carel F.W. Peeters [cre, aut], Caroline Ubelhor [ctb]
+Description: FMradio contains functions that support stable prediction and classification with radiomics data through factor-analytic modeling
+Depends: R (>= 2.15.1)
+Imports: 
+ByteCompile: true
+KeepSource: yes
+License: GPL (>= 2)
+BuildManual: yes
+URL: https://github.com/CFWP/FMradio
