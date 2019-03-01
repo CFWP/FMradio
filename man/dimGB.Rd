@@ -1,14 +1,14 @@
 \name{dimGB}
 \alias{dimGB}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-%%  ~~function to do ... ~~
+Assess the latent dimensionality using Guttman bounds
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+A function that calculates the first, second, and third Guttman (lower-)bounds to the dimensionality of the latent vector.
+These can be used to choose the number of latent factors.
 }
 \usage{
-dimGB(x)
+dimGB(R, graph = TRUE, verbose = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -17,7 +17,13 @@ dimGB(x)
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+What are the GB bounds.
+How can they be used.
+Will be using first lower-bound as upper-bound in HD situations (recommendation).
+
+State functions that support dimension assessment.
+Refer to Guttman.
+State other functions for dimension assessment (but these not generally recommended).
 }
 \value{
 %%  ~Describe the value returned
@@ -27,34 +33,22 @@ dimGB(x)
 %% ...
 }
 \references{
-%% ~put references to the literature/web site here ~
+Peeters, C.F.W. \emph{et al.} (2019). Stable prediction with radiomics data.
 }
 \author{
-%%  ~~who you are~~
+Carel F.W. Peeters <cf.peeters@vumc.nl>
 }
 \note{
-%%  ~~further notes~~
+About lower bounds and usage as upper bounds.
+State this clearly, such that no semantic confusion ensues.
 }
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
-
-## The function is currently defined as
-function (x) 
-{
-  }
+##
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\concept{Guttman bounds}
 
 
 dimGB <- function(R, graph = TRUE, verbose = TRUE){

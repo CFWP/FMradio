@@ -541,13 +541,15 @@ regcor <- function(X, fold = 5, verbose = TRUE){
 
 SA <- function(R){
   ##############################################################################
-  # Calculate Kaiser-Meyer-Olkin measure of sampling adequacy
+  # Calculate Kaiser-Meyer-Olkin measure of feature-sampling adequacy
   # R > (regularized) covariance or correlation matrix
   #
   # NOTES:
-  # - On interpretation
-  # - Kaiser KMO above .9
-  # - About factorability
+  # - The KMO index provides a practical measure for the assessment of 
+  #   factorability.
+  # - Factorability refers to the ability to identify coherent latent features
+  # - A KMO index equalling or exceeding .9 would be considered to indicate
+  #   great factorability
   ##############################################################################  
   
   # Dependencies:
