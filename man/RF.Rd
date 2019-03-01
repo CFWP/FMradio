@@ -42,7 +42,7 @@ Carel F.W. Peeters <cf.peeters@vumc.nl>
 }
 \note{
 \itemize{
-\item While geared towards the reundancy filtering of correlation matrices, the function is quite general, in the sense that it can be use to filter any square \code{matrix}.
+\item While geared towards the redundancy filtering of correlation matrices, the function is quite general, in the sense that it can be used to filter any square \code{matrix}.
 \item When the input matrix \code{R} is a correlation matrix, then argument \code{t} should satisfy \eqn{-1 < \mathrm{t} < 1}, for the return matrix to be sensical for further analysis.
 }
 }
