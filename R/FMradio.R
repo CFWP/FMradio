@@ -14,7 +14,7 @@
 ## Email:	     cf.peeters@vumc.nl
 ##
 ## Version: 1
-## Last Update:	18/02/2019
+## Last Update:	01/03/2019
 ## Description:	Pipeline (support) for prediction with radiomic data compression
 ##
 ################################################################################
@@ -546,7 +546,7 @@ SA <- function(R){
   #
   # NOTES:
   # - The KMO index provides a practical measure for the assessment of 
-  #   factorability.
+  #   factorability
   # - Factorability refers to the ability to identify coherent latent features
   # - A KMO index equalling or exceeding .9 would be considered to indicate
   #   great factorability
@@ -592,14 +592,18 @@ SA <- function(R){
 dimGB <- function(R, graph = TRUE, verbose = TRUE){
   ##############################################################################
   # Calculates the first, second, and third Guttman lower-bounds
-  # R        > (regularized) covariance or correlation matrix
+  # R        > (regularized) correlation matrix
+  # graph    > logical indicating if the results should be visualized
   # verbose  > logical indicating if function should run silently
   #
   # NOTES:
-  # - First lower-bound corresponds to kaiser's rule
-  # - What are the lower-bounds
-  # - There is ordering in bounds
-  # - 
+  # - Output corresponds to the Guttman bounds for the minimum rank of a 
+  #   reduced correlation matrix
+  # - This minimum rank can be used to make a choice on the dimensionality
+  #   of the latent vector
+  # - The first lower-bound corresponds to kaiser's rule
+  # - Note that there is an ordering in the bounds in the sense that:
+  #   bound 1 <= bound 2 <= bound 3
   ##############################################################################  
   
   # Dependencies:

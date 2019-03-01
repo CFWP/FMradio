@@ -1,6 +1,5 @@
 \name{dimIC}
 \alias{dimIC}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 %%  ~~function to do ... ~~
 }
@@ -8,7 +7,7 @@
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-dimIC(x)
+dimIC(R, n, maxdim, Type = "BIC", graph = TRUE, verbose = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

@@ -17,7 +17,7 @@ regcor(X, fold = 5, verbose = TRUE)
   A \code{numeric} integer or \code{integer} indicating the number of folds to use in cross-validation.
   }
   \item{verbose}{
-  A \code{logical} indicating if function should run silently.
+  A \code{logical} indicating if function should run silently.\cr
   Runs silently when \code{verbose = FALSE}.
   }
 }
