@@ -26,11 +26,8 @@ Refer to Guttman.
 State other functions for dimension assessment (but these not generally recommended).
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+Returns object of class \code{table}.
+WHAT XXX
 }
 \references{
 Peeters, C.F.W. \emph{et al.} (2019). Stable prediction with radiomics data.
