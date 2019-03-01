@@ -22,14 +22,16 @@ regcor(X, fold = 5, verbose = TRUE)
   }
 }
 \details{
-Regularized correlation matrix. (LW-type: ref to LW.)
-How do we determine the penalty value.
+This function estimates a Ledoit-Wolf-type (Ledoit & Wolf, 2004) regularized correlation matrix.
+The optimal penalty-value is determined internally by \emph{K}-fold cross-validation of the of the negative log-likelihood function.
+The procedure is efficient as it makes use of the Brent root-finding procedure (Brent, 1971).
+The value at which the \emph{K}-fold cross-validated negative log-likelihood score is minimized is deemed optimal. 
+The function employs the Brent algorithm as implemented in the \href{https://stat.ethz.ch/R-manual/R-devel/library/stats/html/optim.html}{optim} function.
+It outputs the optimal value for the penalty parameter and the regularized correlation matrix under this optimal penalty value.
+See Peeters \emph{et al.} (2019) for further details.
 
-also input into dimGB and SA functions.
-These, together with this output is Input into mlFA.
-
-  # - The estimator is a Ledoit-Wolf type estimator
-  # - The K-fold cv procedure makes use of the Brent algorithm
+The optimal penalty-value can be used to assess the conditioning of the estimated regularized correlation matrix using, for example, a condition number plot (Peeters, van de Wiel, van Wieringen, 2016). 
+The regularized correlation matrix under the optimal penalty can serve as the input to functions that assess factorability (\code{\link{SA}}), evaluate optimal choices of the latent common factor dimensionality (e.g., \code{\link{dimGB}}), and perform maximum likelihood factor analysis (\code{\link{mlFA}}).
 }
 \value{
 The function returns an object of class \code{list}:
@@ -37,7 +39,13 @@ The function returns an object of class \code{list}:
 \item{$optCor}{A \code{matrix} representing the regularized correlation matrix under the optimal penalty-value.}
 }
 \references{
+Brent, R.P. (1971). An Algorithm with Guaranteed Convergence for Finding a Zero of a Function. Computer Journal 14: 422-425.
+
+Ledoit, O, & Wolf, M. (2004). A well-conditioned estimator for large-dimensional covariance matrices. Journal of Multivariate Analysis, 88:365--411.
+
 Peeters, C.F.W. \emph{et al.} (2019). Stable prediction with radiomics data.
+
+Peeters, C.F.W., van de Wiel, M.A., & van Wieringen, W.N. (2016). The spectral condition number plot for regularization parameter determination, arXiv:1608.04123v1 [stat.CO].
 }
 \author{
 Carel F.W. Peeters <cf.peeters@vumc.nl>
@@ -46,7 +54,7 @@ Carel F.W. Peeters <cf.peeters@vumc.nl>
 Note that, for argument \code{X}, the observations are expected to be in the rows and the features are expected to be in the columns.
 }
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link{SA}}, \code{\link{dimGB}}, \code{\link{mlFA}}
 }
 \examples{
 ## Generate some (high-dimensional) data
