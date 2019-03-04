@@ -14,7 +14,7 @@
 ## Email:	     cf.peeters@vumc.nl
 ##
 ## Version: 1
-## Last Update:	01/03/2019
+## Last Update:	03/03/2019
 ## Description:	Pipeline (support) for prediction with radiomic data compression
 ##
 ################################################################################
@@ -679,7 +679,7 @@ dimGB <- function(R, graph = TRUE, verbose = TRUE){
 
 dimIC <- function(R, n, maxdim, Type = "BIC", graph = TRUE, verbose = TRUE){
   ##############################################################################
-  # Performs dimensionality assessment by way of the BIC
+  # Performs dimensionality assessment by way of the AIC or BIC
   # R       > (regularized) covariance or correlation matrix
   # n       > sample size
   # maxdim  > maximum number of latent factors to be assessed

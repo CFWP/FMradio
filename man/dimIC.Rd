@@ -1,155 +1,90 @@
 \name{dimIC}
 \alias{dimIC}
 \title{
-%%  ~~function to do ... ~~
+Assess the latent dimensionality using information criteria
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+A function that calculates either the AIC or the BIC on the factor model.
+These can be used to choose the number of latent factors.
 }
 \usage{
 dimIC(R, n, maxdim, Type = "BIC", graph = TRUE, verbose = TRUE)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{
-%%     ~~Describe \code{x} here~~
-}
+  \item{R}{
+  (Regularized) correlation \code{matrix}.
+  }
+  \item{n}{
+  A \code{numeric} scalar representing the sample size.
+  }
+  \item{maxdim}{
+  A \code{numeric} integer or \code{integer} indicating the maximum factor dimension to be assessed.
+  }
+  \item{Type}{
+  A \code{character} indicating the type of IC to be calculated.\cr
+  Must be one of: "AIC", "BIC".
+  }
+  \item{graph}{
+  A \code{logical} indicating if the results should be visualized.
+  }
+  \item{verbose}{
+  A \code{logical} indicating if the function should run silently.\cr
+  Runs silently when \code{verbose = FALSE}.
+  }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+Information criteria (IC) are often used in selecting the number of latent factor to retain.
+IC aim to balance model fit with model complexity. 
+They evaluate (minus 2 times) the maximized value of the (model-dependent) likelihood function weighed with a penalty function that is dependent on the free parameters in the model. 
+Different penalizations define the different types of IC.
+The strategy would be to determine IC scores for a range of consecutive values of the latent factor dimension.
+This function then determines scores for factor solutions ranging from 1 to \code{maxdim} latent factors.
+The solution with the lowest IC score is deemed optimal.
+The function allows for the calculation of either the Akaike information criterion (AIC; Akaike, 1973) or the Bayesian information criterion (BIC; Schwarz, 1978).
+Also see the Supplementary Material of Peeters \emph{et al.} (2019) for additional detail.
+
+When \code{graph = TRUE} the IC scores are visualized. 
+The graph plots the IC score against the consecutive dimensions of the factor solution.
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+The function returns an object of class \code{data.frame}.
+The first column represents the assessed dimensions running from 1 to \code{maxdim}.
+The second column represents the corresponding values of the chosen information criterion.
 }
 \references{
-%% ~put references to the literature/web site here ~
+Akaike, H. (1973). Information theory and an extension of the maximum likelihood principle. In: B. N. Petrov and F. Csaki (Eds.) Second International Symposium on Information Theory, pages 267-281. Budapest: Akademiai Kaido.
+
+Ledermann, W. (1937). On the rank of the reduced correlational matrix in multiple factor analysis. Psychometrika, 2:85-93.
+
+Peeters, C.F.W. \emph{et al.} (2019). Stable prediction with radiomics data.
+
+Schwarz, G.E. (1978). Estimating the dimension of a model. Annals of Statistics, 6:461-464.
 }
 \author{
-%%  ~~who you are~~
+Carel F.W. Peeters <cf.peeters@vumc.nl>
 }
 \note{
-%%  ~~further notes~~
+\itemize{
+\item The argument \code{maxdim} cannot exceed the Ledermann-bound (Ledermann, 1937): \eqn{\lfloor [2p + 1 - (8p + 1)^{1/2}]/2\rfloor}, where \eqn{p} indicates the observed-feature dimension.
+Usually, one wants to set \code{maxdim} much lower than this bound.
+
+\item Other functions for factor analytic dimensionality assessment are \code{\link{dimGB}} and \code{\link{dimLRT}}. In high-dimensional situations usage of \code{\link{dimGB}} on the regularized correlation matrix is recommended.
 }
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link{dimGB}}
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+## Simulate some data according to the factor model
+## $cormatrix gives the correlation matrix on the generated data
+simDAT <- FAsim(p = 50, m = 5, n = 100)
+simDAT$cormatrix
 
-## The function is currently defined as
-function (x) 
-{
-  }
+## Calculate the AIC for models of factor dimension 1 to 20
+AIC <- dimIC(simDAT$cormatrix, n = 100, Type = "AIC", maxdim = 20)
+print(AIC)
+
+## Calculate the BIC for models of factor dimension 1 to 20
+BIC <- dimIC(simDAT$cormatrix, n = 100, Type = "BIC", maxdim = 20)
+print(BIC)
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
-
-
-dimIC <- function(R, n, maxdim, Type = "BIC", graph = TRUE, verbose = TRUE){
-  ##############################################################################
-  # Performs dimensionality assessment by way of the BIC
-  # R       > (regularized) covariance or correlation matrix
-  # n       > sample size
-  # maxdim  > maximum number of latent factors to be assessed
-  # Type    > character specifying the penalty type: either BIC or AIC
-  # graph   > logical indicating if output should also be visualized
-  # verbose > logical indicating if function should run silently
-  #
-  # NOTES:
-  # - maxdim cannot exceed the Ledermann-bound
-  # - usually, one wants to set maxdim (much) lower than the Ledermann-bound
-  ##############################################################################  
-  
-  # Dependencies:
-  # require("base")
-  # require("stats")
-  # require("graphics")
-  
-  # Preliminaries for checks
-  p    <- ncol(R)
-  mmax <- floor((2*p + 1 - sqrt(8*p + 1))/2)
-  
-  # Checks
-  if (!is.matrix(R)){
-    stop("Input (R) should be a matrix")
-  }
-  if (nrow(R) != ncol(R)){
-    stop("Input (R) should be square matrix")
-  }
-  if (class(n) != "numeric" & class(n) != "integer"){
-    stop("Input (n) is of wrong class")
-  }
-  if (length(n) != 1){
-    stop("Length input (n) must be one")
-  }
-  if (n <= 1){
-    stop("Input (n) must be a strictly positive (numeric) integer")
-  }
-  if (class(maxdim) != "numeric" & class(maxdim) != "integer"){
-    stop("Input (maxdim) is of wrong class")
-  }
-  if (length(maxdim) != 1){
-    stop("Length input (maxdim) must be one")
-  }
-  if (maxdim <= 1){
-    stop("Input (maxdim) cannot be lower than 1")
-  }
-  if (maxdim > mmax){
-    stop("Input (maxdim) is too high")
-  }
-  if (!(Type %in% c("BIC", "AIC"))){
-    stop("Input (Type) should be one of {'BIC', 'AIC'}")
-  }
-  if (class(graph) != "logical"){ 
-    stop("Input (graph) is of wrong class") 
-  }
-  if (class(verbose) != "logical"){ 
-    stop("Input (verbose) is of wrong class") 
-  }
-  
-  # Preliminaries
-  IC  <- numeric()
-  dim <- seq(from = 1, to = maxdim, by = 1)
-  
-  # Calculate ICs
-  for (j in 1:length(dim)){
-    m          <- dim[j]
-    fit        <- factanal(factors = m, covmat = R, rotation = "none")
-    loadings   <- fit$loadings[1:p,]
-    Uniqueness <- diag(fit$uniquenesses)
-    IC[j]      <- .IC(R, loadings, Uniqueness, m = m, n = n, type = Type)
-    if (verbose){cat(paste("Calculating IC for dimension m = ", 
-                           m, " done\n", sep = ""))}
-  }
-  
-  # Visualization
-  if (Type == "BIC"){ylabel = "BIC score"}
-  if (Type == "AIC"){ylabel = "AIC score"}
-  if (graph){
-    if (verbose){cat("Visualizing...", "\n")}
-    MT <- seq(from = 1, to = maxdim, by = 2)
-    plot(dim, IC, axes = FALSE, type = "l", 
-         col = "red", xlab = "dimension of factor solution", 
-         ylab = ylabel)
-    axis(2, ylim = c(min(IC),max(IC)), col = "black", lwd = 1)
-    axis(1, xlim = c(1,maxdim), col = "black", lwd = 1, tick = TRUE, at = MT)
-  }
-  
-  # Return object
-  ICt <- as.data.frame(cbind(dim,IC))
-  colnames(ICt) <- c("latent dimension", ylabel)
-  
-  ## Return
-  return(ICt)
-}
+\concept{Information criteria}
