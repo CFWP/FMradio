@@ -794,7 +794,7 @@ dimLRT <- function(R, X, maxdim, rankDOF = TRUE, graph = TRUE,
   # NOTES:
   # - maxdim cannot exceed the Ledermann-bound
   # - usually, one wants to set maxdim (much) lower than the Ledermann-bound
-  # - note that, if p > n, the the maximum rank of the raw correlation matrix
+  # - note that, if p > n, the maximum rank of the raw correlation matrix
   #   is n - 1. In this case there is an alternative Ledermann-bound when 
   #   rankDOF = TRUE. The number of information points in the correlation matrix
   #   is then given as (n-1)*n/2 and this number must exceed 
@@ -1068,7 +1068,6 @@ scree <- function(R, m, type = "ML", vertical = TRUE, verbose = TRUE){
   # verbose  > logical indicating if function should run silently
   #
   # NOTES:
-  # - Argument 'm' only used under type = ML and type = reduced
   # - If type = ML, the eigenvalues under the m-factor solution are returned
   # - If type = reduced, the eigenvalues of the reduced correlation matrix
   #   under the m-factor solution are returned
@@ -1097,7 +1096,7 @@ scree <- function(R, m, type = "ML", vertical = TRUE, verbose = TRUE){
     stop("Length input (m) must be one")
   }
   if (m <= 1){
-    stop("Input (m) cannot be lower than 1")
+    stop("Input (m) must be greater than 1")
   }
   if (m > mmax){
     stop("Input (m) is too high")

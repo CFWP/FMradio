@@ -4,7 +4,7 @@
 Calculate the KMO measure of feature-sampling adequacy
 }
 \description{
-Function that calculates the Kaiser-Meyer-Olkin (KMO) measure of sampling adequacy.
+\code{SA} is a function that calculates the Kaiser-Meyer-Olkin (KMO) measure of sampling adequacy.
 }
 \usage{
 SA(R)

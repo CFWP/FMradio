@@ -4,7 +4,7 @@
 Regularized correlation matrix estimation
 }
 \description{
-Function determining the optimal penalty value and, subsequently, the optimal Ledoit-Wolf type regularized correlation matrix using K-fold cross validation of the negative log-likelihood.
+\code{regcor} is a function that determines the optimal penalty value and, subsequently, the optimal Ledoit-Wolf type regularized correlation matrix using K-fold cross validation of the negative log-likelihood.
 }
 \usage{
 regcor(X, fold = 5, verbose = TRUE)
@@ -54,7 +54,7 @@ Carel F.W. Peeters <cf.peeters@vumc.nl>
 Note that, for argument \code{X}, the observations are expected to be in the rows and the features are expected to be in the columns.
 }
 \seealso{
-\code{\link{SA}}, \code{\link{dimGB}}, \code{\link{mlFA}}
+\code{\link{RF}}, \code{\link{subSet}}, \code{\link{SA}}, \code{\link{dimGB}}, \code{\link{mlFA}}
 }
 \examples{
 ## Generate some (high-dimensional) data

@@ -70,8 +70,9 @@ Usually, one wants to set \code{maxdim} much lower than this bound.
 
 \item Other functions for factor analytic dimensionality assessment are \code{\link{dimGB}} and \code{\link{dimLRT}}. In high-dimensional situations usage of \code{\link{dimGB}} on the regularized correlation matrix is recommended.
 }
+}
 \seealso{
-\code{\link{dimGB}}
+\code{\link{dimGB}}, \code{\link{FAsim}}
 }
 \examples{
 ## Simulate some data according to the factor model

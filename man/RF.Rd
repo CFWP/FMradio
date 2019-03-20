@@ -4,7 +4,7 @@
 Redundancy filtering of a square (correlation) matrix
 }
 \description{
-Function that performs redundancy filtering (RF) of a square (correlation) matrix.
+\code{RF} is a function that performs redundancy filtering (RF) of a square (correlation) matrix.
 }
 \usage{
 RF(R, t = .9)

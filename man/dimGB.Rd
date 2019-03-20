@@ -4,7 +4,7 @@
 Assess the latent dimensionality using Guttman bounds
 }
 \description{
-A function that calculates the first, second, and third Guttman (lower-)bounds to the dimensionality of the latent vector.
+\code{dimGB} is a function that calculates the first, second, and third Guttman (lower-)bounds to the dimensionality of the latent vector.
 These can be used to choose the number of latent factors.
 }
 \usage{

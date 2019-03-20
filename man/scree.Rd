@@ -1,143 +1,87 @@
 \name{scree}
 \alias{scree}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-%%  ~~function to do ... ~~
+Scree plot for an \eqn{m}-factor solution
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+\code{scree} is a function that produces a scree plot under an \eqn{m}-factor solution.
 }
 \usage{
-scree(x)
+scree(R, m, type = "ML", vertical = TRUE, verbose = TRUE)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{
-%%     ~~Describe \code{x} here~~
-}
+  \item{R}{
+  (Regularized) correlation \code{matrix}.
+  }
+  \item{m}{
+  A \code{numeric} integer or \code{integer} indicating the dimension of the factor solution.
+  }
+  \item{type}{
+  A \code{character} indicating the type of eigenvalues to be represented in the scree plot.\cr
+  Must be one of: "ML", "reduced".
+  }
+  \item{vertical}{
+  A \code{logical} indicating if  the value of argument \code{m} should be indicated in the scree plot by a vertical line.
+  }
+  \item{verbose}{
+  A \code{logical} indicating if the function should run silently.\cr
+  Runs silently when \code{verbose = FALSE}.
+  }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+Which types of eigenvalues plotted.
+How should it be used.
+
+1 before the elbow
+
+  # - If type = ML, the eigenvalues under the m-factor solution are returned
+  # - If type = reduced, the eigenvalues of the reduced correlation matrix
+  #   under the m-factor solution are returned
+  
+Are as much eigenvalues as features.
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+The function returns an object of class \code{data.frame}.
+The first column represents the assessed latent dimensions running from 1 to \code{maxdim}.
+The second column represents the observed values of the LRT statistic.
 }
 \references{
-%% ~put references to the literature/web site here ~
+Cattell, R.B. (1966). The Scree Test For The Number Of Factors. Multivariate Behavioral Research. 1: 245--276.
+
+Ledermann, W. (1937). On the rank of the reduced correlational matrix in multiple factor analysis. Psychometrika, 2:85--93.
+
+Peeters, C.F.W. \emph{et al.} (2019). Stable prediction with radiomics data.
 }
 \author{
-%%  ~~who you are~~
+Carel F.W. Peeters <cf.peeters@vumc.nl>
 }
 \note{
-%%  ~~further notes~~
+Different from usual scree (Cattell, 1966).
+Indeed, usual scree operates on raw correlation matrix.
+Here, under a ML factor model.
+
+\itemize{
+\item The argument \code{m} cannot exceed the Ledermann-bound (Ledermann, 1937): \eqn{\lfloor [2p + 1 - (8p + 1)^{1/2}]/2\rfloor}, where \eqn{p} indicates the observed-feature dimension.
 }
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
+}
 \seealso{
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+## Simulate some high-dimensional data according to the factor model
+simDAT <- FAsim(p = 50, m = 5, n = 40)
 
-## The function is currently defined as
-function (x) 
-{
-  }
+## Regularize the correlation matrix
+RegR <- regcor(simDAT$data)
+
+## Produce scree plots
+MLeig  <- scree(RegR$optCor, m = 5, type = "ML"); MLeig
+REDeig <- scree(RegR$optCor, m = 5, type = "reduced"); REDeig
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\concept{Scree plot}
 
-scree <- function(R, m, type = "ML", vertical = TRUE, verbose = TRUE){
-  ##############################################################################
-  # Gives scree plot under an m-factor solution
-  # R        > (regularized) covariance or correlation matrix
-  # m        > dimension of factor solution
-  # type     > character indicating which eigenvalues to calculate
-  # vertical > logical indicating if value of argument m should be indicated
-  #            in graph by a vertical line
-  # verbose  > logical indicating if function should run silently
-  #
-  # NOTES:
-  # - Argument 'm' only used under type = ML and type = reduced
-  # - If type = ML, the eigenvalues under the m-factor solution are returned
-  # - If type = reduced, the eigenvalues of the reduced correlation matrix
-  #   under the m-factor solution are returned
-  ##############################################################################  
-  
-  # Dependencies:
-  # require("base")
-  # require("stats")
-  # require("graphics")
-  
-  # Preliminaries for checks
-  p    <- ncol(R)
-  mmax <- floor((2*p + 1 - sqrt(8*p + 1))/2)
-  
-  # Checks
-  if (!is.matrix(R)){
-    stop("Input (R) should be a matrix")
-  }
-  if (nrow(R) != ncol(R)){
-    stop("Input (R) should be square matrix")
-  }
-  if (class(m) != "numeric" & class(m) != "integer"){
-    stop("Input (m) is of wrong class")
-  }
-  if (length(m) != 1){
-    stop("Length input (m) must be one")
-  }
-  if (m <= 1){
-    stop("Input (m) cannot be lower than 1")
-  }
-  if (m > mmax){
-    stop("Input (m) is too high")
-  }
-  if (!(type %in% c("ML", "reduced"))){
-    stop("Input (type) should be one of {'ML', 'reduced'}")
-  }
-  if (class(vertical) != "logical"){ 
-    stop("Input (vertical) is of wrong class") 
-  }
-  if (class(verbose) != "logical"){ 
-    stop("Input (verbose) is of wrong class") 
-  }
-  
-  # Fit m-factor model
-  fito <- factanal(factors = m, covmat = R, rotation = "none")
-  Psi  <- diag(fito$uniquenesses)
-  
-  # Calculate eigenvalues
-  if (verbose){cat("Calculating eigenvalues...", "\n")}
-  if (type == "ML"){
-    PsiI <- diag(1/sqrt(diag(Psi)))
-    Te   <- PsiI %*% R %*% PsiI
-    EVs  <- eigen(Te)$values
-    yLab <- "Eigenvalue ML factor solution"
-  }
-  if (type == "reduced"){
-    Te  <- R - Psi
-    EVs <- eigen(Te)$values
-    yLab <- "Eigenvalue reduced correlation matrix"
-  }
-  
-  # Visualize
-  if (verbose){cat("Visualizing...", "\n")}
-  dims <- c(1:dim(R)[1])
-  plot(dims, EVs, axes = FALSE, type = "l", 
-       col = "red", xlab = "eigenvalue no.", 
-       ylab = yLab, main = paste("Dimension of factor solution:", m))
-  axis(2, ylim = c(0, max(EVs)), col = "black", lwd = 1)
-  axis(1, xlim = c(1,max(dims)), col = "black", lwd = 1, tick = TRUE)
-  abline(v = m)
+
+
   
   # Return object
   EVt <- as.data.frame(cbind(dims, EVs))

@@ -1,148 +1,75 @@
 \name{dimVAR}
 \alias{dimVAR}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-%%  ~~function to do ... ~~
+Assessing variances under factor solutions
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+\code{dimVAR} is a support function that assesses the proportion of and cumulative variances for a 
+range of factor solutions.
 }
 \usage{
-dimVAR(x)
+dimVAR(R, maxdim, graph = TRUE, verbose = TRUE)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{
-%%     ~~Describe \code{x} here~~
-}
+  \item{R}{
+  (Regularized) correlation \code{matrix}.
+  }
+  \item{maxdim}{
+  A \code{numeric} integer or \code{integer} indicating the maximum factor dimension to be assessed.
+  }
+  \item{graph}{
+  A \code{logical} indicating if the results should be visualized.
+  }
+  \item{verbose}{
+  A \code{logical} indicating if the function should run silently.\cr
+  Runs silently when \code{verbose = FALSE}.
+  }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+To assess a factor solution under \eqn{m} factors one might look at the proportion of explained variance.
+The \code{dimVAR} function calculates the proportion of variance explained by any factor as well as 
+the proportion of variance explained by all factors for each factor solution raging from 1 to \code{maxdim}.
+Qualitatively, we want the proportion of variance explained by all factors to be appreciable (rules of thumb would say in excess of 70\%).
+Moreover, one would want the proportion of variance explained by the \eqn{k}th factor in relation to the \eqn{(k - 1)}th factor to be appreciable and the proportion of variance of the \eqn{(k + 1)}th factor in relation to the \eqn{k}th factor to be negligible.
+
+When \code{graph = TRUE} also a graph is returned visualizing the total cumulative variance against the dimension of the factor solution.
+Hence, it plots the total cumulative variances against the respective factor solutions ranging from 1 to \code{maxdim}.
+The point at which the graph flattens out is indicative of a formative number of latent factors.
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+Returns an object of class \code{list}.
+\item{$CumVar}{Contains a \code{numeric} vector with the cumulative variances explained for each factor solution from 1 to \code{maxdim}.}
+\item{$varianceTables}{This slot is itself a \code{list}. It contains, for each factor solution, a matrix with the sum of squares (SS), proportion variance (PV), and cumulative variance (CV) for each respective latent feature. Say one wants to access the variance table for a solution under 5-factors. Then one can call \code{$varianceTables$`dimension = 5`}. Similar calls are made to retrieve the variance table for other factor solutions.}
 }
 \references{
-%% ~put references to the literature/web site here ~
+Ledermann, W. (1937). On the rank of the reduced correlational matrix in multiple factor analysis. Psychometrika, 2:85--93.
+
+Peeters, C.F.W. \emph{et al.} (2019). Stable prediction with radiomics data.
 }
 \author{
-%%  ~~who you are~~
+Carel F.W. Peeters <cf.peeters@vumc.nl>
 }
 \note{
-%%  ~~further notes~~
+\itemize{
+\item The argument \code{maxdim} cannot exceed the Ledermann-bound (Ledermann, 1937): \eqn{\lfloor [2p + 1 - (8p + 1)^{1/2}]/2\rfloor}, where \eqn{p} indicates the observed-feature dimension.
+Usually, one wants to set \code{maxdim} much lower than this bound.
+
+\item The tabulations in the \code{$varianceTables} slot are based on unrotated maxmimum likelihood factor solutions. Note that the total cumulative variance does not depend on the choice of (orthogonal) rotation.
 }
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
+}
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link{dimGB}}, \code{\link{FAsim}}, \code{\link{mlFA}}, \code{\link{SMC}}, \code{\link{scree}}
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+## Simulate some high-dimensional data according to the factor model
+simDAT <- FAsim(p = 50, m = 5, n = 40)
 
-## The function is currently defined as
-function (x) 
-{
-  }
-}
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+## Regularize the correlation matrix
+RegR <- regcor(simDAT$data)
 
-dimVAR <- function(R, maxdim, graph = TRUE, verbose = TRUE){
-  ##############################################################################
-  # Support function assessing proportion and cumulative variances for a 
-  # range of factor solutions
-  # R        > (regularized) covariance or correlation matrix
-  # maxdim   > maximum number of latent factors to be assessed
-  # graph    > logical indicating if output should also be visualized
-  # verbose  > logical indicating if function should run silently
-  #
-  # NOTES:
-  # - maxdim cannot exceed the Ledermann-bound
-  # - usually, one wants to set maxdim (much) lower than the Ledermann-bound
-  # - factor solutions are assessed ranging from 1 to maxdim
-  # - SS, proportion variance and cumulative variance are tabulated for each
-  #   factor solution
-  # - these are based on the unrotated solution
-  # - note that the cumulative variance does not depend on the choice of 
-  #   (orthogonal) rotation
-  # - when graph = TRUE, a graph is returned visualizing the total cumulative
-  #   variance against the dimension of the factor solution
-  ##############################################################################  
-  
-  # Dependencies:
-  # require("base")
-  # require("stats")
-  # require("graphics")
-  
-  # Preliminaries for checks
-  p    <- ncol(R)
-  mmax <- floor((2*p + 1 - sqrt(8*p + 1))/2)
-  
-  # Checks
-  if (!is.matrix(R)){
-    stop("Input (R) should be a matrix")
-  }
-  if (nrow(R) != ncol(R)){
-    stop("Input (R) should be square matrix")
-  }
-  if (class(maxdim) != "numeric" & class(maxdim) != "integer"){
-    stop("Input (maxdim) is of wrong class")
-  }
-  if (length(maxdim) != 1){
-    stop("Length input (maxdim) must be one")
-  }
-  if (maxdim <= 1){
-    stop("Input (maxdim) cannot be lower than 1")
-  }
-  if (maxdim > mmax){
-    stop("Input (maxdim) is too high")
-  }
-  if (class(graph) != "logical"){ 
-    stop("Input (graph) is of wrong class") 
-  }
-  if (class(verbose) != "logical"){ 
-    stop("Input (verbose) is of wrong class") 
-  }
-  
-  # Preliminaries
-  dim <- seq(from = 1, to = maxdim, by = 1)
-  L   <- list()
-  mCV <- numeric()
-  
-  # Calculate SS, proportion variance, cumulative variance
-  for (j in 1:length(dim)){
-    m      <- dim[j]
-    fit    <- factanal(factors = m, covmat = R, rotation = "none")
-    SS     <- diag(t(fit$loadings)%*%(fit$loadings))
-    PV     <- SS/p
-    CV     <- cumsum(PV)
-    mCV[j] <- max(CV)
-    L[[j]] <- rbind(SS,PV,CV)
-    names(L)[j] <- paste("dimension =", m)
-    if (verbose){cat(paste("Calculating statistics for dimension m = ", 
-                           m, " done\n", sep = ""))}
-  }
-  
-  # Visualization
-  if (graph){
-    if (verbose){cat("Visualizing...", "\n")}
-    MT <- seq(from = 1, to = maxdim, by = 2)
-    plot(dim, mCV, axes = FALSE, type = "l", 
-         col = "red", xlab = "dimension of factor solution", 
-         ylab = "total cumulative variance")
-    axis(2, ylim = c(0, max(mCV)), col = "black", lwd = 1)
-    axis(1, xlim = c(1,maxdim), col = "black", lwd = 1, tick = TRUE, at = MT)
-  }
-  
-  # Return
-  return(list(CumVar = mCV, varianceTables = L))
+## Assess proportion and cumulative variances for a range of factor solutions
+## Inspect, for example, the variance table for the 5-factor solution
+V <- dimVAR(RegR$optCor, maxdim = 20)
+V$varianceTables$`dimension = 5`
 }
+\concept{Cumulative variance}

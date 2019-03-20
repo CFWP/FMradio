@@ -1,95 +1,64 @@
 \name{SMC}
 \alias{SMC}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-%%  ~~function to do ... ~~
+Compare squared multiple correlations with model-based communalities
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+\code{SMC} is a function that compares the best lower-bound estimates to the communalities with the model-based communalities implied by a factor solution of dimension \eqn{m}.
 }
 \usage{
-SMC(x)
+SMC(R, LM)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{
-%%     ~~Describe \code{x} here~~
-}
+  \item{R}{
+  (Regularized) correlation \code{matrix}.
+ }
+  \item{LM}{
+  (Rotated) factor loadings \code{matrix}.
+ }
 }
 \details{
-Requires run/fit of mlFA.
+This function can be used to qualitatively assess the choice of dimensionality (as well as the fit) in the \eqn{m}-factor model.
+This is done using the concept of communalities.
+The communality refers to the amount of variance of feature \eqn{j} explained by the latent features.
+It is then of interest to compare lower-bound estimates of the (population) communalities to the extracted communalities under the \eqn{m}-factor model.
+
+Guttman (1956) gave the best possible lower-bound estimates to the communalities, which can essentially be considered squared multiple correlations: the proportion of variance in feature \eqn{j} that is explained by the remaining \eqn{p - 1} features.
+To assess a factor model, these might be compared to the retrieved estimated communalities under the \eqn{m}-factor model.
+When the chosen latent dimensionality is sufficient then one would expect that, for almost all features, the retrieved communality approximately equals or exceeds its corresponding lower-bound estimate.
+If this is not the case then one might have extracted too few factors.
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+The function returns a \code{matrix}.
+The first column (labeled 'SMC') contains the lower-bound estimates to the communalities.
+The second column (labeled 'Communalities') contains the retrieved estimated communalities under the \eqn{m}-factor model.
 }
 \references{
-%% ~put references to the literature/web site here ~
+Guttman, L. (1956). Best possible systematic estimates of communalities. Psychometrika, 21:273--285.
+
+Peeters, C.F.W. \emph{et al.} (2019). Stable prediction with radiomics data.
 }
 \author{
-%%  ~~who you are~~
+Carel F.W. Peeters <cf.peeters@vumc.nl>
 }
 \note{
-%%  ~~further notes~~
+Note that the choice of orthogonal rotation does not affect the model-implied communality estimates.
 }
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link{dimGB}}, \code{\link{FAsim}}, \code{\link{mlFA}}, \code{\link{dimVAR}}, \code{\link{scree}}
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+## Simulate some high-dimensional data according to the factor model
+simDAT <- FAsim(p = 50, m = 5, n = 40)
 
-## The function is currently defined as
-function (x) 
-{
-  }
-}
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+## Regularize the correlation matrix
+RegR <- regcor(simDAT$data)
 
-SMC <- function(R, LM){
-  ##############################################################################
-  # Juxtaposing SMCs and estimates of communalities
-  # R  > (regularized) covariance or correlation matrix
-  # LM > (rotated) loadings matrix
-  #
-  # NOTES:
-  # - Squared multiple correlations (SMCs) refer to the proportion of variance 
-  #   in feature j that is explained by the remaining p - 1 features
-  # - Note that the choice of orthogonal rotation does not affect the 
-  #   communality estimates
-  ##############################################################################  
-  
-  # Dependencies:
-  # require("base")
-  
-  # Checks
-  if (!is.matrix(R)){
-    stop("Input (R) should be a matrix")
-  }
-  if (nrow(R) != ncol(R)){
-    stop("Input (R) should be square matrix")
-  }
-  if (!is.matrix(LM)){
-    stop("Input (LM) should be a matrix")    
-  } 
-  if (ncol(R) != nrow(LM)){
-    stop("Column (or row) dimension input (R) incompatible with row-dimension input (LM)")    
-  }
-  
-  # Calculate SMCs and communalities
-  SMC           <- 1 - 1/diag(solve(R))
-  Communalities <- diag((LM) %*% t(LM))
-  
-  # Return
-  return(cbind(SMC, Communalities))
+## Fit 5-factor model to the regularized correlation matrix
+fit <- mlFA(RegR$optCor, m = 5)
+
+## Compare lower-bound estimates to communalities with model-implied ones
+C <- SMC(RegR$optCor, fit$Loadings)
+print(C)
 }
+\concept{Squared multiple correlation}
