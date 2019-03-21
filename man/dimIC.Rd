@@ -52,13 +52,13 @@ The first column represents the assessed dimensions running from 1 to \code{maxd
 The second column represents the corresponding values of the chosen information criterion.
 }
 \references{
-Akaike, H. (1973). Information theory and an extension of the maximum likelihood principle. In: B. N. Petrov and F. Csaki (Eds.) Second International Symposium on Information Theory, pages 267-281. Budapest: Akademiai Kaido.
+Akaike, H. (1973). Information theory and an extension of the maximum likelihood principle. In: B. N. Petrov and F. Csaki (Eds.) Second International Symposium on Information Theory, pages 267--281. Budapest: Akademiai Kaido.
 
-Ledermann, W. (1937). On the rank of the reduced correlational matrix in multiple factor analysis. Psychometrika, 2:85-93.
+Ledermann, W. (1937). On the rank of the reduced correlational matrix in multiple factor analysis. Psychometrika, 2:85--93.
 
 Peeters, C.F.W. \emph{et al.} (2019). Stable prediction with radiomics data.
 
-Schwarz, G.E. (1978). Estimating the dimension of a model. Annals of Statistics, 6:461-464.
+Schwarz, G.E. (1978). Estimating the dimension of a model. Annals of Statistics, 6:461--464.
 }
 \author{
 Carel F.W. Peeters <cf.peeters@vumc.nl>

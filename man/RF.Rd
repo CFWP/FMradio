@@ -19,7 +19,7 @@ RF(R, t = .9)
 }
 \details{
 Radiomic features can be very strongly correlated.
-The sample correlation matrix on extracted radiomic features will then often dislay strong collinearity.
+The sample correlation matrix on extracted radiomic features will then often display strong collinearity.
 The collinearity may be so strong as to imply redundant information, in the sense that some entries will approach perfect (negative) correlation. 
 Hence, one may wish to perform redundancy-filtering on the raw sample correlation matrix in such situations.
 

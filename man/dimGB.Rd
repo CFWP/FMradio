@@ -43,7 +43,7 @@ The Guttman approach has historically been used as a lower-bound estimate of the
 We consider the decisional approach stated above to give an upper-bound.
 Peeters \emph{et al.} (2019) contains an extensive simulation study showing that in high-dimensional situations this decisional approach provides a reliable upper-bound.
 The choice of the number of factors can be further assessed with the \code{\link{SMC}} and \code{\link{dimVAR}} functions.
-Assessments provided by these latter functions may inform if the result of the decisional rule above should be accepted or be treated as an upper-bound
+Assessments provided by these latter functions may inform if the result of the decisional rule above should be accepted or be treated as an upper-bound.
 
 When \code{graph = TRUE} the Guttman bounds are visualized. 
 It plots the consecutive eigenvalues for each of the reduced correlation matrices.

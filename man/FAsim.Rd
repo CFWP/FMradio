@@ -36,30 +36,26 @@ FAsim(p, m, n, simplestructure = TRUE, balanced = TRUE,
   A \code{logical} indicating if, next to positive, also negative loadings should be present.
  }
   \item{loadingvalue}{
-  A \code{numeric} indicating the value for high (i.e., qualitatively 'significant') loadings.\cr
-  Used when \code{loadingfix = TRUE}.
+  A \code{numeric} indicating the value for high (i.e., qualitatively 'significant') loadings. Used when \code{loadingfix = TRUE}.
  }
   \item{loadingvaluelow}{
-  A \code{numeric} indicating the value for low loadings.\cr
-  Used when \code{loadingfix = TRUE} & \code{simplestructure = FALSE}.
+  A \code{numeric} indicating the value for low loadings. Used when \code{loadingfix = TRUE} & \code{simplestructure = FALSE}.
  }
   \item{numloadings}{
   A \code{numeric} vector with length equalling argument \code{m}, indicating the number of high (i.e., qualitatively 'significant') loadings per factor.\cr 
   Used when \code{balanced = FALSE}.
  }
   \item{loadinglowerH}{
-  A \code{numeric} indicating the lower-bound of high (i.e., qualitatively 'significant') loadings.\cr Used when \code{loadingfix = FALSE}.
+  A \code{numeric} indicating the lower-bound of high (i.e., qualitatively 'significant') loadings. Used when \code{loadingfix = FALSE}.
  }
   \item{loadingupperH}{
-  A \code{numeric} indicating the upper-bound of high (i.e., qualitatively 'significant') loadings.\cr Used when \code{loadingfix = FALSE}.
+  A \code{numeric} indicating the upper-bound of high (i.e., qualitatively 'significant') loadings. Used when \code{loadingfix = FALSE}.
  }
   \item{loadinglowerL}{
-  A \code{numeric} indicating the lower-bound of low (i.e., qualitatively 'non-significant') loadings.\cr
-  Used when \code{loadingfix = FALSE} & \code{simplestructure = FALSE}.
+  A \code{numeric} indicating the lower-bound of low (i.e., qualitatively 'non-significant') loadings. Used when \code{loadingfix = FALSE} & \code{simplestructure = FALSE}.
  }
   \item{loadingupperL}{
-  A \code{numeric} indicating the upper-bound of low (i.e., qualitatively 'non-significant') loadings.\cr
-  Used when \code{loadingfix = FALSE} & \code{simplestructure = FALSE}.
+  A \code{numeric} indicating the upper-bound of low (i.e., qualitatively 'non-significant') loadings. Used when \code{loadingfix = FALSE} & \code{simplestructure = FALSE}.
  }
 }
 \details{

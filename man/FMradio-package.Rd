@@ -14,10 +14,10 @@ prediction or classification model.
 Radiomics refers to the mining of large numbers of quantitative features from standard-of-care
 clinical images.
 \code{FMradio} aims to provide support for stable prediction and classification modeling with radiomics data, irrespective of imaging modality (such as MRI, PET, or CT).
-The workflow has 3 main steps that ultimately enable stable prediction and classificatio.
+The workflow has 3 main steps that ultimately enable stable prediction and classification.
 
 \bold{Step 1: Regularized correlation matrix estimation.}
-Radiomic data are often high-dimensional in the sense that there are more features than observation.
+Radiomic data are often high-dimensional in the sense that there are more features than observations.
 Moroever, radiomic data are often highly collinear, in the sense that collections of features may be highly correlated (in the absolute sense).
 This results in the correlation matrix on the radiomic features to be ill-conditioned or even singular.
 It is also this combination of characteristics that proves difficult to predictive modeling.
@@ -29,7 +29,7 @@ The following functions are then of use:
   \item \code{\link{subSet}}
   \item \code{\link{regcor}}
 }
-The \code{radioHeat} function van be used to visualize (a possibly regularized) correlation matrix as a heatmap.
+The \code{radioHeat} function can be used to visualize (a possibly regularized) correlation matrix as a heatmap.
 It can also be used to visually assess feature-redundancy.
 The \code{RF} function provides functionality for filtering features that are so collinear that they are deemed redundant.
 The \code{suBSet} function provides functionality to subset data objects to those features retained after possible filtering.
@@ -49,7 +49,7 @@ The following functions are then of use:
 The \code{SA} function assesses if performing a factor analysis on the (possibly regularized) correlation matrix would be appropriate.
 The \code{dimGB} function can be used to determine the number of latent factors (i.e., to determine the intrinsic dimensionality of the meta-feature space).
 The \code{dimVAR} and \code{dimSMC} functions can be used to provide additional decision support with respect to the output of the \code{dimGB} function.
-The \code{mlFA} function then performs a maximum likelihood factor analysis using the (possibly regularized) correlation matrix and the choice of intrinsic dimensionalty as inputs.
+The \code{mlFA} function then performs a maximum likelihood factor analysis using the (possibly regularized) correlation matrix and the choice of intrinsic dimensionality as inputs.
 
 \bold{Step 3: Obtaining factor scores.}
 The third step would be to use the factor analytic solution to obtain factor scores: the score each object/individual would obtain on each of the latent factors.
@@ -77,7 +77,7 @@ These are contained in the following (convenience) functions:
 }
 The \code{dimLRT} and \code{dimIC} functions provide alternative options for assessing the number of latent factors using likelihood ratio testing and information criteria, respectively.
 These are only recommended when the sample size is large relative to the number of features.
-The \code{FAsim} provised a flexible function for generating data according to the orthogonal common factor analytic model. 
+\code{FAsim} provides a flexible function for generating data according to the orthogonal common factor analytic model. 
 All these functions may be of use in comparative exercises.
 }
 \author{

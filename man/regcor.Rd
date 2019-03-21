@@ -39,7 +39,7 @@ The function returns an object of class \code{list}:
 \item{$optCor}{A \code{matrix} representing the regularized correlation matrix under the optimal penalty-value.}
 }
 \references{
-Brent, R.P. (1971). An Algorithm with Guaranteed Convergence for Finding a Zero of a Function. Computer Journal 14: 422-425.
+Brent, R.P. (1971). An Algorithm with Guaranteed Convergence for Finding a Zero of a Function. Computer Journal 14: 422--425.
 
 Ledoit, O, & Wolf, M. (2004). A well-conditioned estimator for large-dimensional covariance matrices. Journal of Multivariate Analysis, 88:365--411.
 

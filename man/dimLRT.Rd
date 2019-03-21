@@ -41,7 +41,7 @@ dimLRT(R, X, maxdim, rankDOF = TRUE, graph = TRUE,
 \details{
 The most formal approach to factor analytic dimensionality assessment is through likelihood ratio (LR) testing.
 The basic idea is to test the \eqn{m}-factor model against the saturated model.
-The corresponding LR criterion then converges, under the standard correlation matrix and corresponding parameter estimates under $m$-factors, to \eqn{(n - 1)} times a certain discrepancy function evaluated at the maximum-likelihood-parameters under the \eqn{m}-factor model.
+The corresponding LR criterion then converges, under the standard correlation matrix and corresponding parameter estimates under \eqn{m}-factors, to \eqn{(n - 1)} times a certain discrepancy function evaluated at the maximum-likelihood-parameters under the \eqn{m}-factor model.
 This quantity is approximately \eqn{\chi^{2}}-distributed under certain regularity conditions (Amemiya & Anderson, 1990).
 The general strategy would then be to sequentially test solutions of increasing dimensionality \eqn{m = 1, \ldots, \mbox{maxdim}} until the null hypothesis (stating that the \eqn{m}-factor model holds) is \emph{not} rejected at Type-I error level \code{alpha}.
 
@@ -54,8 +54,8 @@ This road is taken when \code{rankDOF = TRUE}.
 Bartlett (1950) proposed a correction factor when the sample size is small to make the test statistic behave more \eqn{\chi^{2}}-like.
 This correction factor is used when \code{Bartlett = TRUE}.
 
-When \code{graph = TRUE} the IC scores are visualized. 
-The graph plots the LRT p-values against the consecutive dimensions of the factor solution.
+When \code{graph = TRUE} the LRT results are visualized. 
+The graph plots the LRT \eqn{p}-values against the consecutive dimensions of the factor solution.
 A horizontal line is plotted at the value provided in the \code{alpha} argument.
 
 Unless the number of observations is much larger than the number of features, the LRT is not recommended for inference in general.

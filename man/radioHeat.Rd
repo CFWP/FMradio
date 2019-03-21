@@ -5,8 +5,8 @@ Visualize a (correlation) matrix as a heatmap
 }
 \description{
 \code{radioHeat} is a function that provides dedicated heatmapping of a radiomics-based correlation matrix
-Can be used to visually assess the elements of a (possibly thresholded) matrix.
-It supports the assessment of collinearity.
+It can be used to visually assess the elements of a (possibly thresholded) matrix.
+It also supports the assessment of collinearity.
 }
 \usage{
 radioHeat(R, lowColor = "blue", highColor = "red", labelsize = 10,
