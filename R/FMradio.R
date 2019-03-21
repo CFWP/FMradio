@@ -9,12 +9,13 @@
 ##             Statistics for Omics Research Unit
 ##             Dept. of Epidemiology & Biostatistics
 ##             Amsterdam Public Health research institute
-##             VU University medical center
+##             Amsterdam University medical centers,
+##             Location VU University medical center
 ##             Amsterdam, the Netherlands
 ## Email:	     cf.peeters@vumc.nl
 ##
 ## Version: 1
-## Last Update:	03/03/2019
+## Last Update:	21/03/2019
 ## Description:	Pipeline (support) for prediction with radiomic data compression
 ##
 ################################################################################
@@ -1373,19 +1374,20 @@ FAsim <- function(p, m, n, simplestructure = TRUE, balanced = TRUE,
   # - numloadings     > vector with length equalling argument m, indicating the
   #                     number of 'significant' loadings per factor. Used when
   #                     balanced = FALSE
-  # - loadinglowerH   > lower-bound of 'significant' (high) loading, used when 
+  # - loadinglowerH   > lower-bound of 'significant' (high) loadings, used when 
   #                     loadingfix = FALSE
-  # - loadingupperH   > upper-bound of 'significant' (high) loading, used when 
+  # - loadingupperH   > upper-bound of 'significant' (high) loadings, used when 
   #                     loadingfix = FALSE
-  # - loadinglowerL   > lower-bound of 'non-significant' (low) loading, used 
+  # - loadinglowerL   > lower-bound of 'non-significant' (low) loadings, used 
   #                     when loadingfix = FALSE & simplestructure = FALSE
-  # - loadingupperL   > upper-bound of 'non-significant' (low) loading, used 
+  # - loadingupperL   > upper-bound of 'non-significant' (low) loadings, used 
   #                     when loadingfix = FALSE & simplestructure = FALSE
   #
   # NOTES:
   # - Produces a standardized data matrix of size n x p
   # - Also output the correlation matrix based on the generated data and the
-  #   loadings and uniquenesses matrices on which the data-generation was based
+  #   loadings matrix and uniquenesses vector on which the data-generation was 
+  #   based
   # - A uniform distribution is assumed when generating draws between 
   #   loadinglowerH and loadingupperH
   # - A uniform distribution is assumed when generating draws between 

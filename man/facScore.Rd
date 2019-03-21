@@ -1,125 +1,94 @@
 \name{facScore}
 \alias{facScore}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-%%  ~~function to do ... ~~
+Compute factor scores
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+\code{facScore} is a function that computes factor scores, the score each person/object attains on each latent factor.
 }
 \usage{
-facScore(x)
+facScore(X, LM, UM, type = "thomson")
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{
-%%     ~~Describe \code{x} here~~
-}
+  \item{X}{
+  A (scaled and possibly subsetted) data \code{matrix}.
+  }
+  \item{LM}{
+  A (rotated) loadings \code{matrix}. Usually the \code{$Loadings}-slot object from the \code{\link{mlFA}} function output.
+  }
+  \item{UM}{
+  A diagonal uniquenesses \code{matrix}. Usually the \code{$Uniqueness}-slot object from the \code{\link{mlFA}} function output.
+  }
+  \item{type}{
+  A \code{character} indicating the type of factor score to calculate.\cr
+  Must be one of: "thomson", "bartlett", "anderson".
+  }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+Once a factor model is fitted one may desire an estimate of the score each object/individual would obtain on each of the latent factors.
+Such scores are referred to as factor scores.
+The \code{facScore} function provides several types of factor score estimates.
+The default are Thomson-type scores (Thomson, 1939).
+These may be viewed as (empirical) Bayesian-type scores.
+Bartlett-type scores (Bartlett, 1937) are unbiased but less efficient in terms of mean-squared error.
+Under the orthogonal model the latent factors are orthogonal in
+the population and, hence, the Thomson and Bartlett-type factor scores will be near orthogonal
+in the sample. 
+Anderson and Rubin (1956) constructed an alternative estimator for the factor
+scores that enforces their orthogonality in the sample.
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+The function returns an object of class \code{data.frame}.
+Observations are represented in the rows.
+Each column represent a latent factor.
 }
 \references{
-%% ~put references to the literature/web site here ~
+Anderson, T.W., & Rubin, H. (1956). Statistical inference in factor analysis. In Proceedings
+of the Third Berkeley Symposium on Mathematical Statistics and Probability, volume 5:
+Contributions to Econometrics, Industrial Research, and Psychometry, pages 111--150.
+Berkeley, CA: University of California Press.
+
+Bartlett, M.S. (1937). The statistical conception of mental factors. British Journal of Psychology,
+28:97--104.
+
+Peeters, C.F.W. \emph{et al.} (2019). Stable prediction with radiomics data.
+
+Thomson, G. (1939). The Factorial Analysis of Human Ability. London: University of Londen
+Press.
 }
 \author{
-%%  ~~who you are~~
+Carel F.W. Peeters <cf.peeters@vumc.nl>
 }
 \note{
-%%  ~~further notes~~
+The input data (argument \code{X}) are assumed to be scaled (or at least centered).
+The \code{UM} matrix is assumed to be positive definite.
+The \code{LM} matrix is assumed to be of full column rank.
 }
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link{dimGB}}, \code{\link{mlFA}}, \code{\link{facSMC}}
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+## Simulate some data according to a factor model with 5 latent factors
+## Simulate high-dimensional situation in the sense that p > n
+## $cormatrix gives the correlation matrix on the generated data
+simDAT <- FAsim(p = 50, m = 5, n = 40, loadingvalue = .9)
+simDAT$cormatrix
 
-## The function is currently defined as
-function (x) 
-{
-  }
+## Regularize the correlation matrix
+RegR <- regcor(simDAT$data)
+
+## Evaluate the Guttman bounds
+## First Guttman bound indicates to retain 5 latent factors
+GB <- dimGB(RegR$optCor)
+print(GB)
+
+## Produce ML factor solution under 5 factors
+## Print loadings structure of this solution
+fit <- mlFA(RegR$optCor, 5)
+print(fit$Loadings, digits = 2, cutoff = .3, sort = TRUE)
+
+## Obtain factor-scores
+scores <- facScore(scale(simDAT$data), fit$Loadings, fit$Uniqueness)
+print(scores)
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
-
-
-facScore <- function(X, LM, UM, type = "thomson"){
-  ##############################################################################
-  # Finds factor scores from data and given factor-solution
-  # Default is Thomson-type factor scores
-  # X    > data matrix, observations in rows
-  # LM   > (rotated) loadings matrix
-  # UM   > diagonal uniquenesses matrix
-  # type > character indicating the type of factor score to calculate
-  #
-  # NOTES:
-  # - The input data are assumed to be scaled (or at least centered)
-  # - The UM matrix is assumed to be positive definite
-  # - The LM matrix is assumed to be of full column rank
-  # - The factor-scores obtained the default way are Thomson-type scores
-  # - These will be near-orthogonal
-  # - These are close to Bartlett-type scores, which are unbiased
-  # - Anderson-type scores are orthogonal
-  # - The return-object is a dataframe
-  ##############################################################################  
-  
-  # Dependencies:
-  # require("base")
-  # require("expm")
-  
-  # Checks
-  if (!is.matrix(X)){
-    stop("Input (X) should be a matrix")    
-  }
-  if (!is.matrix(LM)){
-    stop("Input (LM) should be a matrix")    
-  } 
-  if (ncol(X) != nrow(LM)){
-    stop("Column-dimension input (X) incompatible with row-dimension input (LM)")    
-  }
-  if (!is.matrix(UM)){
-    stop("Input (UM) should be a matrix")    
-  } 
-  if (nrow(UM) != ncol(UM)){
-    stop("Input (UM) should be square matrix")
-  }
-  if (ncol(X) != nrow(UM)){
-    stop("Column-dimensions input (X) incompatible with dimension input (UM)")    
-  }
-  if (!(type %in% c("thomson", "bartlett", "anderson"))){
-    stop("Input (type) should be one of {'thomson', 'bartlett', 'anderson'}")
-  }
-
-  # Needed
-  UMi <- diag(1/diag(UM))
-  m   <- diag(dim(LM)[2])
-  
-  # Obtain factor scores
-  if (type == "thomson"){
-    scores <- as.data.frame(X %*% UMi %*% LM %*% solve(m + t(LM) %*% UMi %*% LM))
-  }
-  if (type == "bartlett"){
-    scores <- as.data.frame(X %*% UMi %*% LM %*% solve(t(LM) %*% UMi %*% LM))
-  }
-  if (type == "anderson"){
-    G <- t(LM) %*% UMi %*% LM
-    scores <- as.data.frame(X %*% UMi %*% LM %*% sqrtm(solve((G %*% (m + G)))))
-  }
-  
-  # Return
-  return(scores)
-}
+\concept{Factor scores}

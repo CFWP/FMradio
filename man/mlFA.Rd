@@ -18,8 +18,9 @@ mlFA(R, m)
   }
 }
 \details{
-This function is basically a wrapper around the \href{https://stat.ethz.ch/R-manual/R-devel/library/stats/html/factanal.html} function from the \href{https://stat.ethz.ch/R-manual/R-devel/library/stats/html/stats-package.html}{stats} package.
-Its purpose is to produce a factor solution of the chosen dimension (argument \code{m}) by a maximum likelihood estimation procedure.
+This function is basically a wrapper around the 
+\href{https://stat.ethz.ch/R-manual/R-devel/library/stats/html/factanal.html}{factanal} function from the \href{https://stat.ethz.ch/R-manual/R-devel/library/stats/html/stats-package.html}{stats} package.
+Its purpose is to produce a factor solution of the chosen dimension (argument \code{m}) by a maximum likelihood estimation procedure (Joreskog, 1967).
 The wrapper ensures that the model is fitted under the same circumstances under which latent dimensionality is assessed with functions such as \code{\link{dimLRT}} and \code{\link{dimIC}}.
 The function produces a Varimax rotated (Kaiser, 1958) factor solution.
 The output can be used to produce factor scores by the \code{\link{facScore}} function.
@@ -31,6 +32,9 @@ The function returns an object of class \code{list}:
 \item{$rotmatrix}{A \code{matrix} representing the Varimax rotation matrix.}
 }
 \references{
+Joreskog, K.G (1967). Some contributions to maximum likelihood factor analysis. Psychometrika,
+32:443--482.
+
 Kaiser, H.F. (1958). The varimax criterion for analytic rotation in factor analysis. Psychometrika,
 23:187--200.
 

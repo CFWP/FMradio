@@ -1,97 +1,73 @@
 \name{facSMC}
 \alias{facSMC}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-%%  ~~function to do ... ~~
+Evaluate the determinacy of factor scores
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+\code{facSMC} is a function with which one may evaluate the determinacy of factor scores.
 }
 \usage{
-facSMC(x)
+facSMC(R, LM)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{
-%%     ~~Describe \code{x} here~~
-}
+  \item{R}{
+  (Regularized) correlation \code{matrix}.
+  }
+  \item{LM}{
+  A (rotated) loadings \code{matrix}. Usually the \code{$Loadings}-slot object from the \code{\link{mlFA}} function output.
+  }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+The \code{facSMC} function calculates the squared multiple correlations between the observed features and the common latent factors.
+The closer to unity, the lesser the problem of factor-score indeterminacy and the better one is able to uniquely determine the  factor scores.
+In practice, a squared multiple correlation equalling or exceeding .9 would be considered adequate.
+See Mulaik (2010, Chapter 13) and Peeters \emph{et al.} (2019, Supplementary Materials) for further details.
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+The function returns a \code{numeric} vector indicating, for each factor, the squared multiple correlation between the observed features and the common latent factor.
 }
 \references{
-%% ~put references to the literature/web site here ~
+Mulaik, S.A. (2010). Foundations of Factor Analysis. Boca Raton: Chapman & Hall/CRC, 2nd
+edition.
+
+Peeters, C.F.W. \emph{et al.} (2019). Stable prediction with radiomics data.
 }
 \author{
-%%  ~~who you are~~
+Carel F.W. Peeters <cf.peeters@vumc.nl>
 }
 \note{
-%%  ~~further notes~~
+Note that the computations assume an orthogonal factor model.
+Hence, only orthogonal rotations of the loadings matrix should be used (or no rotation at all).
 }
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link{facScore}}
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+## Simulate some data according to a factor model with 5 latent factors
+## Simulate high-dimensional situation in the sense that p > n
+## $cormatrix gives the correlation matrix on the generated data
+simDAT <- FAsim(p = 50, m = 5, n = 40, loadingvalue = .9)
+simDAT$cormatrix
 
-## The function is currently defined as
-function (x) 
-{
-  }
-}
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+## Regularize the correlation matrix
+RegR <- regcor(simDAT$data)
 
-facSMC <- function(R, LM){
-  ##############################################################################
-  # Calculate squared multiple correlations for predicting the common factors
-  # R  > (regularized) correlation matrix
-  # LM > (rotated) loadings matrix
-  #
-  # NOTES:
-  # - Calculates squared multiple correlations between the observed features
-  #   and the common factors
-  # - The closer to unity, the better one is able to determine the factors scores
-  #   from the observed features
-  # - Hence, the closer to unity, the lesser the problem of factor-score 
-  #   indeterminacy and the better one is able to uniquely determine the 
-  #   factor scores
-  # - Note that the computations assume an orthogonal factor model
-  # - Hence, only orthogonal rotations of the loadings matrix should be used 
-  #   (or no rotation at all)
-  ##############################################################################  
-  
-  # Dependencies:
-  # require("base")
-  
-  # Checks
-  if (!is.matrix(R)){
-    stop("Input (R) should be a matrix")
-  }
-  if (nrow(R) != ncol(R)){
-    stop("Input (R) should be square matrix")
-  }
-  if (!is.matrix(LM)){
-    stop("Input (LM) should be a matrix")    
-  } 
-  if (ncol(R) != nrow(LM)){
-    stop("Column-dimension input (R) incompatible with row-dimension input (LM)")    
-  }
-  
-  # Determine squared multiple correlations for predicting factors
-  return(diag(t(LM) %*% solve(R) %*% LM))
+## Evaluate the Guttman bounds
+## First Guttman bound indicates to retain 5 latent factors
+GB <- dimGB(RegR$optCor)
+print(GB)
+
+## Produce ML factor solution under 5 factors
+## Print loadings structure of this solution
+fit <- mlFA(RegR$optCor, 5)
+print(fit$Loadings, digits = 2, cutoff = .3, sort = TRUE)
+
+## Obtain factor-scores
+scores <- facScore(scale(simDAT$data), fit$Loadings, fit$Uniqueness)
+print(scores)
+
+## Evaluate determinacy of factor scores
+fd <- facSMC(RegR$optCor, fit$Loadings)
+print(fd)
 }
+\concept{Factor determinacy}

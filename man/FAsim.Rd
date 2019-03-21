@@ -1,321 +1,123 @@
 \name{FAsim}
 \alias{FAsim}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-%%  ~~function to do ... ~~
+Simulate data according to the common factor analytic model
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+\code{FAsim} is a function that enables the simulation of data according to the common factor analytic model.
 }
 \usage{
-FAsim(x)
+FAsim(p, m, n, simplestructure = TRUE, balanced = TRUE,
+      loadingfix = TRUE, loadingnegative = TRUE,
+      loadingvalue = .8, loadingvaluelow = .2, numloadings,
+      loadinglowerH = .7, loadingupperH = .9, 
+      loadinglowerL = .1, loadingupperL = .3)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{
-%%     ~~Describe \code{x} here~~
-}
+  \item{p}{
+  A \code{numeric} integer or \code{integer} indicating the number of observed features.
+ }
+  \item{m}{
+  A \code{numeric} integer or \code{integer} indicating the latent dimension of the factor solution (i.e., the number of factors).
+ }
+  \item{n}{
+  A \code{numeric} integer or \code{integer} indicating the number of samples.
+ }
+  \item{simplestructure}{
+  A \code{logical} indicating if the generating factor structure should be factorially pure.
+ }
+  \item{balanced}{
+  A \code{logical} indicating if the high (i.e., qualitatively 'significant') loadings should be divided evenly over the respective factors.
+ }
+  \item{loadingfix}{
+  A \code{logical} indicating if the loadings should have a fixed value.
+ }
+  \item{loadingnegative}{
+  A \code{logical} indicating if, next to positive, also negative loadings should be present.
+ }
+  \item{loadingvalue}{
+  A \code{numeric} indicating the value for high (i.e., qualitatively 'significant') loadings.\cr
+  Used when \code{loadingfix = TRUE}.
+ }
+  \item{loadingvaluelow}{
+  A \code{numeric} indicating the value for low loadings.\cr
+  Used when \code{loadingfix = TRUE} & \code{simplestructure = FALSE}.
+ }
+  \item{numloadings}{
+  A \code{numeric} vector with length equalling argument \code{m}, indicating the number of high (i.e., qualitatively 'significant') loadings per factor.\cr 
+  Used when \code{balanced = FALSE}.
+ }
+  \item{loadinglowerH}{
+  A \code{numeric} indicating the lower-bound of high (i.e., qualitatively 'significant') loadings.\cr Used when \code{loadingfix = FALSE}.
+ }
+  \item{loadingupperH}{
+  A \code{numeric} indicating the upper-bound of high (i.e., qualitatively 'significant') loadings.\cr Used when \code{loadingfix = FALSE}.
+ }
+  \item{loadinglowerL}{
+  A \code{numeric} indicating the lower-bound of low (i.e., qualitatively 'non-significant') loadings.\cr
+  Used when \code{loadingfix = FALSE} & \code{simplestructure = FALSE}.
+ }
+  \item{loadingupperL}{
+  A \code{numeric} indicating the upper-bound of low (i.e., qualitatively 'non-significant') loadings.\cr
+  Used when \code{loadingfix = FALSE} & \code{simplestructure = FALSE}.
+ }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+\code{FAsim} provides certain flexibility when generating data according to an orthogonal common factor-analytic model.
+It can produce data according to, for example, (i) factorially pure loadings structures, (ii) loadings-structures with only positive entries or both positive and negative loadings, (iii) loadings-structures with fixed values or varying values, (iv) balanced and unbalanced loadings-structures.
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+The function returns an object of class \code{list}:
+\item{$data}{A standardized data \code{matrix} of size \eqn{n \times p}.}
+\item{$loadings}{Loadings \code{matrix} of size \eqn{p \times m} on which the data-generation was based.}
+\item{$Uniqueness}{A \code{numeric} vector of size \eqn{p} representing the uniquenesses on which the data-generation was based.}
+\item{$cormatrix}{A \eqn{p \times p} correlation \code{matrix} based on the generated data in slot \code{$data}.}
 }
 \references{
-%% ~put references to the literature/web site here ~
+Ledermann, W. (1937). On the rank of the reduced correlational matrix in multiple factor analysis. Psychometrika, 2:85--93.
+
+Peeters, C.F.W. \emph{et al.} (2019). Stable prediction with radiomics data.
 }
 \author{
-%%  ~~who you are~~
+Carel F.W. Peeters <cf.peeters@vumc.nl>
 }
 \note{
-%%  ~~further notes~~
+\itemize{
+\item A uniform distribution is assumed when generating draws between \code{loadinglowerH} and \code{loadingupperH}.
+
+\item A uniform distribution is assumed when generating draws between \code{loadinglowerL} and \code{loadingupperL}.
+
+\item The argument \code{m} cannot exceed the Ledermann-bound (Ledermann, 1937): \eqn{\lfloor [2p + 1 - (8p + 1)^{1/2}]/2\rfloor}, where \eqn{p} indicates the observed-feature dimension.
 }
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
+}
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link{dimGB}}, \code{\link{mlFA}}, \code{\link{facScore}}
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+## Simulate some data according to a factor model with 3 latent factors
+## Balanced and factorially pure loadings structure
+simDAT <- FAsim(p = 24, m = 3, n = 40, loadingvalue = .9)
+simDAT$loadings
 
-## The function is currently defined as
-function (x) 
-{
-  }
+## Simulate some data according to a factor model with 3 latent factors
+## Unbalanced and factorially pure loadings structure
+simDAT <- FAsim(p = 24, m = 3, n = 40, loadingvalue = .9,
+                balanced = FALSE, numloadings = c(10,10,4))
+simDAT$loadings
+
+## Simulate some data according to a factor model with 3 latent factors
+## Unbalanced and factorially non-pure loadings structure
+simDAT <- FAsim(p = 24, m = 3, n = 40, loadingvalue = .9,
+                balanced = FALSE, numloadings = c(10,10,4),
+                simplestructure = FALSE)
+simDAT$loadings
+
+## Simulate some data according to a factor model with 3 latent factors
+## Unbalanced and factorially non-pure loadings structure
+## Non-fixed high and low loadings
+simDAT <- FAsim(p = 24, m = 3, n = 40, loadingvalue = .9,
+                balanced = FALSE, numloadings = c(10,10,4),
+                simplestructure = FALSE, loadingfix = FALSE)
+simDAT$loadings
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
-
-
-FAsim <- function(p, m, n, simplestructure = TRUE, balanced = TRUE,
-                  loadingfix = TRUE, loadingnegative = TRUE,
-                  loadingvalue = .8, loadingvaluelow = .2, numloadings,
-                  loadinglowerH = .7, loadingupperH = .9, 
-                  loadinglowerL = .1, loadingupperL = .3){
-  ##############################################################################
-  # Simulate data according to the factor analytic model
-  # - p               > feature dimension
-  # - m               > dimension of latent vector
-  # - n               > number of samples
-  # - simplestructure > logical indicating if factor structure should be 
-  #                     factorially pure
-  # - balanced        > logical indicating if the 'significant' loadings
-  #                     should be divided evenly over the respective factors
-  # - loadingfix      > logical indicating if the loadings should have a 
-  #                     fixed value
-  # - loadingnegative > logical indicating if, next to positive, also negative
-  #                     loadings should be present
-  # - loadingvalue    > value for high loadings, used when loadingfix = TRUE
-  # - loadingvaluelow > value for low loadings, used when loadingfix = TRUE &
-  #                     simplestructure = FALSE
-  # - numloadings     > vector with length equalling argument m, indicating the
-  #                     number of 'significant' loadings per factor. Used when
-  #                     balanced = FALSE
-  # - loadinglowerH   > lower-bound of 'significant' (high) loading, used when 
-  #                     loadingfix = FALSE
-  # - loadingupperH   > upper-bound of 'significant' (high) loading, used when 
-  #                     loadingfix = FALSE
-  # - loadinglowerL   > lower-bound of 'non-significant' (low) loading, used 
-  #                     when loadingfix = FALSE & simplestructure = FALSE
-  # - loadingupperL   > upper-bound of 'non-significant' (low) loading, used 
-  #                     when loadingfix = FALSE & simplestructure = FALSE
-  #
-  # NOTES:
-  # - Produces a standardized data matrix of size n x p
-  # - Also output the correlation matrix based on the generated data and the
-  #   loadings and uniquenesses matrices on which the data-generation was based
-  # - A uniform distribution is assumed when generating draws between 
-  #   loadinglowerH and loadingupperH
-  # - A uniform distribution is assumed when generating draws between 
-  #   loadinglowerL and loadingupperL
-  ##############################################################################  
-  
-  # Dependencies:
-  # require("base")
-  # require("stats")
-  # require("MASS")
-  
-  # Checks
-  if (class(p) != "numeric" & class(p) != "integer"){ 
-    stop("Input (p) is of wrong class") 
-  }
-  if (p <=  1){ 
-    stop("Input (p) should be at least 2") 
-  }
-  if (length(p) != 1){
-    stop("Length input (p) must be one")
-  }
-  if (class(m) != "numeric" & class(m) != "integer"){ 
-    stop("Input (m) is of wrong class") 
-  }
-  if (m <=  0){ 
-    stop("Input (m) should be strictly positive") 
-  }
-  if (length(m) != 1){
-    stop("Length input (m) must be one")
-  }
-  mmax <- floor((2*p + 1 - sqrt(8*p + 1))/2)
-  if (m > mmax){
-    stop("Input (m) is too high")
-  }
-  if (class(n) != "numeric" & class(n) != "integer"){ 
-    stop("Input (n) is of wrong class") 
-  }
-  if (n <=  1){ 
-    stop("Input (n) should be at least 2") 
-  }
-  if (length(n) != 1){
-    stop("Length input (n) must be one")
-  }
-  if (class(simplestructure) != "logical"){ 
-    stop("Input (simplestructure) is of wrong class") 
-  }
-  if (class(balanced) != "logical"){ 
-    stop("Input (balanced) is of wrong class") 
-  }
-  if (class(loadingfix) != "logical"){ 
-    stop("Input (loadingfix) is of wrong class") 
-  }
-  if (class(loadingnegative) != "logical"){ 
-    stop("Input (loadingnegative) is of wrong class") 
-  }
-  
-  # Conditional checks
-  if (loadingfix){
-    if (class(loadingvalue) != "numeric"){ 
-      stop("Input (loadingvalue) is of wrong class") 
-    }
-    if (length(loadingvalue) != 1){ 
-      stop("Length input (loadingvalue) must be one") 
-    }
-    if (class(loadingvaluelow) != "numeric"){ 
-      stop("Input (loadingvaluelow) is of wrong class") 
-    }
-    if (length(loadingvaluelow) != 1){ 
-      stop("Length input (loadingvaluelow) must be one") 
-    }
-  }
-  if (!loadingfix){
-    if (class(loadinglowerH) != "numeric"){ 
-      stop("Input (loadinglowerH) is of wrong class") 
-    }
-    if (length(loadinglowerH) != 1){ 
-      stop("Length input (loadinglowerH) must be one") 
-    }
-    if (class(loadingupperH) != "numeric"){ 
-      stop("Input (loadingupperH) is of wrong class") 
-    }
-    if (length(loadingupperH) != 1){ 
-      stop("Length input (loadingupperH) must be one") 
-    }
-    if (!simplestructure){
-      if (class(loadinglowerL) != "numeric"){ 
-        stop("Input (loadinglowerL) is of wrong class") 
-      }
-      if (length(loadinglowerL) != 1){ 
-        stop("Length input (loadinglowerL) must be one") 
-      }
-      if (class(loadingupperL) != "numeric"){ 
-        stop("Input (loadingupperL) is of wrong class") 
-      }
-      if (length(loadingupperL) != 1){ 
-        stop("Length input (loadingupperL) must be one") 
-      }
-    }
-  }
-  if (!balanced){
-    if (class(numloadings) != "numeric" & class(numloadings) != "integer"){
-      stop("Input (numloadings) is of wrong class") 
-    }
-    if (length(numloadings) != m){
-      stop("Length of input (numloadings) should equal argument m") 
-    }
-    if (sum(numloadings) != p){
-      stop("Sum of inputs (numloadings) should equal argument p") 
-    }
-  }
-  
-  # Loadings matrix
-  Lambda <- matrix(0,p,m)
-  if (balanced){
-    h   <- floor(p/m)
-    hi1 <- 1 - h
-    hi2 <- 0
-    for (i in 1:m){
-      hi1 <- hi1 + h
-      hi2 <- hi2 + h
-      if (loadingfix){
-        Lambda[(hi1):(hi2),i] <- loadingvalue
-      }
-      if (!loadingfix){
-        Lambda[(hi1):(hi2),i] <- 
-          runif(length((hi1):(hi2)), 
-                min = loadinglowerH, 
-                max = loadingupperH)
-      }
-      if (loadingnegative){
-        Polarity <- sign(runif(length((hi1):(hi2)), min = -1, max = 1))
-        Lambda[(hi1):(hi2),i] <- Lambda[(hi1):(hi2),i] * Polarity
-      }
-    }
-    if (hi2 != p){
-      if (loadingfix){
-        Lambda[((hi2)+1):p,i] <- loadingvalue
-      }
-      if (!loadingfix){
-        Lambda[((hi2)+1):p,i] <-
-          runif(length(((hi2)+1):p), 
-                min = loadinglowerH, 
-                max = loadingupperH)
-      }
-    }
-    if (!simplestructure){
-      if (loadingfix){
-        if (loadingnegative){
-          Polarity <- sign(runif(length(Lambda[Lambda == 0]), min = -1, max = 1))
-          loadingvaluelow <- loadingvaluelow * Polarity
-        }
-        Lambda[Lambda == 0] <- loadingvaluelow
-      }
-      if (!loadingfix){
-        nbs <- runif(length(Lambda[Lambda == 0]), 
-                     min = loadinglowerL, 
-                     max = loadingupperL)
-        if (loadingnegative){
-          Polarity <- sign(runif(length(Lambda[Lambda == 0]), min = -1, max = 1))
-          nbs      <- nbs * Polarity
-        }
-        Lambda[Lambda == 0] <- nbs
-      }
-    }
-  }
-  if (!balanced){
-    low  <- cumsum(numloadings)
-    low  <- c(1,low[-length(low)] + 1)
-    high <- cumsum(numloadings)
-    for (i in 1:length(numloadings)){
-      if (loadingfix){
-        Lambda[low[i]:high[i],i] <- loadingvalue
-      }
-      if (!loadingfix){
-        Lambda[low[i]:high[i],i] <- 
-          runif(length(low[i]:high[i]), 
-                min = loadinglowerH, 
-                max = loadingupperH)
-      }
-      if (loadingnegative){
-        Polarity <- sign(runif(length(low[i]:high[i]), min = -1, max = 1))
-        Lambda[low[i]:high[i],i] <- Lambda[low[i]:high[i],i] * Polarity
-      }
-    }
-    if (!simplestructure){
-      if (loadingfix){
-        if (loadingnegative){
-          Polarity <- sign(runif(length(Lambda[Lambda == 0]), min = -1, max = 1))
-          loadingvaluelow <- loadingvaluelow * Polarity
-        }
-        Lambda[Lambda == 0] <- loadingvaluelow
-      }
-      if (!loadingfix){
-        nbs <- runif(length(Lambda[Lambda == 0]), 
-                     min = loadinglowerL, 
-                     max = loadingupperL)
-        if (loadingnegative){
-          Polarity <- sign(runif(length(Lambda[Lambda == 0]), min = -1, max = 1))
-          nbs      <- nbs * Polarity
-        }
-        Lambda[Lambda == 0] <- nbs
-      }
-    }
-  }
-  
-  # Uniqueness matrix
-  Psi <- diag(p) - diag(diag(Lambda %*% t(Lambda)))
-  
-  # Generate data
-  SigmaModel <- Lambda %*% t(Lambda) + Psi
-  Scaling    <- diag(sqrt(1/diag(SigmaModel)))
-  SigmaModel <- Scaling %*% SigmaModel %*% Scaling
-  Data       <- mvrnorm(n = n, mu = rep(0,p), Sigma = SigmaModel, 
-                        tol = 1e-6, empirical = FALSE, EISPACK = FALSE)
-  
-  # Automatic naming of features
-  prefix         <- "feature"
-  suffix         <- seq(1:p)
-  colnames(Data) <- paste(prefix, suffix, sep = ".")
-  
-  # Return
-  data <- scale(Data)
-  return(list(data = data, loadings = Lambda, 
-              Uniqueness = diag(Psi), cormatrix = cor(data)))
-}
+\concept{Data simulation}
