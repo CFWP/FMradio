@@ -11,4 +11,4 @@ ByteCompile: true
 KeepSource: yes
 License: GPL (>= 2)
 BuildManual: yes
-URL: https://github.com/CFWP/FMradio
+BugReports: https://github.com/CFWP/FMradio
