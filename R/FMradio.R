@@ -81,9 +81,7 @@
   cvLL <- 0
   for (f in 1:length(folds)){
     R    <- cor(X[-folds[[f]], , drop = FALSE])
-    S    <- crossprod(X[folds[[f]], , drop = FALSE])
-    Sd   <- diag(sqrt(1/diag(S)))
-    S    <- Sd %*% S %*% Sd
+    S    <- cor(X[folds[[f]], , drop = FALSE])
     nf   <- dim(X[folds[[f]], , drop = FALSE])[1]
     cvLL <- cvLL + nf*.LL(S, .corLW(R, lambda))
   }
