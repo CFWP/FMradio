@@ -25,7 +25,7 @@ Be sure that you have the [package development prerequisites](http://www.rstudio
 
 * A pdf-version of the manual can be found [here](https://cfwp.github.io/PDFs/FMradio.pdf).
 
-* The R-script used to produce the simulations and results contained in Peeters, C.F.W., \emph{et al}. (2019) [see references below] can be found [here](https://cfwp.github.io/PDFs/Simulations&Analysis.R).
+* The R-script used to produce the simulations and results contained in Peeters, C.F.W., *et al*. (2019) [see references below] can be found [here](https://cfwp.github.io/PDFs/Simulations&Analysis.R).
 
 
 ## References
@@ -35,6 +35,5 @@ Relevant publications to **FMradio** include:
  1. Peeters, C.F.W. (2019). 
     *"FMradio: Factor modeling for radiomic data"*. 
     R package, version 1.0
- 2. Peeters, C.F.W., \emph{et al}. (2019)
+ 2. Peeters, C.F.W., *et al*. (2019)
     *"Stable prediction with radiomics data"*.
-    Available as [arXiv:1608.04123v1 \[stat.CO\]](http://arxiv.org/abs/1608.04123). 
