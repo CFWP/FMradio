@@ -1,10 +1,10 @@
 Package: FMradio
 Type: Package
-Title: Factor Modeling for radiomics data
+Title: Factor Modeling for Radiomics Data
 Version: 1.0
 Maintainer: Carel F.W. Peeters <cf.peeters@vumc.nl>
 Author: Carel F.W. Peeters [cre, aut], Caroline Ubelhor [ctb]
-Description: FMradio contains functions that support stable prediction and classification with radiomics data through factor-analytic modeling.
+Description: Functions that support stable prediction and classification with radiomics data through factor-analytic modeling.
 Depends: R (>= 2.15.1)
 Imports: stats, ggplot2, reshape, Biobase, graphics, expm, MASS
 ByteCompile: true

@@ -63,8 +63,7 @@ The determinacy of these scores can be assessed with the \code{facSMC} function.
 
 \bold{Step 4: Prediction and classification.}
 The factor scores obtained with Step 3 can be directly used as (low-dimensional and orthogonal) covariates in any prediction, classification or learning procedure.
-One may use the full flexibility provided by 
-\href{https://cran.r-project.org/web/packages/available_packages_by_name.html}{R} for this step.
+One may use the full flexibility provided by the CRAN repository for this step.
 \cr
 \cr
 \emph{Additional functionality.}
