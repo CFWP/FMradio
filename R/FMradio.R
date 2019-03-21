@@ -14,7 +14,7 @@
 ##             Amsterdam, the Netherlands
 ## Email:	     cf.peeters@vumc.nl
 ##
-## Version: 1
+## Version: 1.0
 ## Last Update:	21/03/2019
 ## Description:	Pipeline (support) for prediction with radiomic data compression
 ##
@@ -232,6 +232,8 @@
 ## Function for heatmap visualization
 ##
 ##------------------------------------------------------------------------------
+
+if (getRversion() >= "2.15.1") utils::globalVariables(c("X1", "X2", "value"))
 
 radioHeat <- function(R, lowColor = "blue", highColor = "red", labelsize = 10,
                       diag = TRUE, threshold = FALSE, threshvalue = .95,

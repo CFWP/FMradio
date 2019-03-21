@@ -1,4 +1,13 @@
 # Imports
+importFrom("stats", cor, optim, factanal, pchisq, runif)
+importFrom("ggplot2", ggplot, aes, geom_tile, scale_fill_gradient2, theme,
+           element_blank, element_text, xlab, ylab, ylim, ggtitle,
+           geom_text)
+importFrom("reshape", melt)
+importFrom("Biobase", ExpressionSet, featureNames)
+importFrom("graphics", abline, axis, legend, lines, plot)
+importFrom("expm", sqrtm)
+importFrom("MASS", mvrnorm)
 
 # Exports
 exportPattern("^[[:alpha:]]+")
