@@ -1,4 +1,4 @@
-![FMradio](https://github.com/CFWP/FMradio/blob/master/inst/FMradioLOGO.png)
+![FMradio](https://github.com/CFWP/FMradio/tree/master/inst/FMradioLOGO.png)
 
 
 # FMradio
