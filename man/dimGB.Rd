@@ -42,7 +42,7 @@ See Peeters \emph{et al.} (2019) for additional detail.
 The Guttman approach has historically been used as a lower-bound estimate of the latent dimensionality.
 We consider the decisional approach stated above to give an upper-bound.
 Peeters \emph{et al.} (2019) contains an extensive simulation study showing that in high-dimensional situations this decisional approach provides a reliable upper-bound.
-The choice of the number of factors can be further assessed with the \code{\link{SMC}}, \code{\link{dimVAR}}, and \code{\link{scree}} functions.
+The choice of the number of factors can be further assessed with the \code{\link{SMC}} and \code{\link{dimVAR}} functions.
 Assessments provided by these latter functions may inform if the result of the decisional rule above should be accepted or be treated as an upper-bound
 
 When \code{graph = TRUE} the Guttman bounds are visualized. 
@@ -70,7 +70,7 @@ Carel F.W. Peeters <cf.peeters@vumc.nl>
 }
 }
 \seealso{
-\code{\link{SMC}}, \code{\link{dimVAR}}, \code{\link{scree}}, \code{\link{FAsim}}
+\code{\link{SMC}}, \code{\link{dimVAR}}, \code{\link{FAsim}}
 }
 \examples{
 ## Simulate some data according to a factor model with 5 latent factors

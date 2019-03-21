@@ -45,7 +45,7 @@ Carel F.W. Peeters <cf.peeters@vumc.nl>
 Note that the choice of orthogonal rotation does not affect the model-implied communality estimates.
 }
 \seealso{
-\code{\link{dimGB}}, \code{\link{FAsim}}, \code{\link{mlFA}}, \code{\link{dimVAR}}, \code{\link{scree}}
+\code{\link{dimGB}}, \code{\link{FAsim}}, \code{\link{mlFA}}, \code{\link{dimVAR}}
 }
 \examples{
 ## Simulate some high-dimensional data according to the factor model

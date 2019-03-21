@@ -58,7 +58,7 @@ Usually, one wants to set \code{maxdim} much lower than this bound.
 }
 }
 \seealso{
-\code{\link{dimGB}}, \code{\link{FAsim}}, \code{\link{mlFA}}, \code{\link{SMC}}, \code{\link{scree}}
+\code{\link{dimGB}}, \code{\link{FAsim}}, \code{\link{mlFA}}, \code{\link{SMC}}
 }
 \examples{
 ## Simulate some high-dimensional data according to the factor model
