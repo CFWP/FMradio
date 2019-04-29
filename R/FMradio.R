@@ -1363,6 +1363,7 @@ autoFMradio <- function(X, t = .95, fold = 5, GB = 1, type = "thomson",
   
   # Printing information
   if (printInfo){
+    KMO <- SA(Rreg$optCor)$KMO
     if (GB == as.integer(1)){GBc <- "first"}
     if (GB == as.integer(2)){GBc <- "second"}
     if (GB == as.integer(3)){GBc <- "third"}
@@ -1373,6 +1374,7 @@ autoFMradio <- function(X, t = .95, fold = 5, GB = 1, type = "thomson",
     cat(paste("      Features retained after filtering:", p, "\n"))
     cat(paste("    Number of folds in cross-validation:", fold, "\n"))
     cat(paste("        Optimal value penalty parameter:", Rreg$optPen, "\n"))
+    cat(paste("                              KMO index:", KMO, "\n"))
     cat("Step 2: \n")
     cat(paste("Number of latent factors determined by:", GBc, "Guttman bound", "\n"))
     cat(paste("              Number of latent factors:", m, "\n"))
