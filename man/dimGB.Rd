@@ -58,6 +58,7 @@ The entries correspond to the first, second, and third Guttman bounds.
 Guttman, L. (1956). Best possible systematic estimates of communalities. Psychometrika, 21:273--285.
 
 Peeters, C.F.W. \emph{et al.} (2019). Stable prediction with radiomics data.
+\href{https://arxiv.org/abs/1903.11696}{arXiv:1903.11696 [stat.ML]}.
 }
 \author{
 Carel F.W. Peeters <cf.peeters@vumc.nl>

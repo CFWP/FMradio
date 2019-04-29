@@ -44,6 +44,7 @@ Brent, R.P. (1971). An Algorithm with Guaranteed Convergence for Finding a Zero 
 Ledoit, O, & Wolf, M. (2004). A well-conditioned estimator for large-dimensional covariance matrices. Journal of Multivariate Analysis, 88:365--411.
 
 Peeters, C.F.W. \emph{et al.} (2019). Stable prediction with radiomics data.
+\href{https://arxiv.org/abs/1903.11696}{arXiv:1903.11696 [stat.ML]}.
 
 Peeters, C.F.W., van de Wiel, M.A., & van Wieringen, W.N. (2016). The spectral condition number plot for regularization parameter determination, arXiv:1608.04123v1 [stat.CO].
 }

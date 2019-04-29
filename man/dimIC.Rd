@@ -57,6 +57,7 @@ Akaike, H. (1973). Information theory and an extension of the maximum likelihood
 Ledermann, W. (1937). On the rank of the reduced correlational matrix in multiple factor analysis. Psychometrika, 2:85--93.
 
 Peeters, C.F.W. \emph{et al.} (2019). Stable prediction with radiomics data.
+\href{https://arxiv.org/abs/1903.11696}{arXiv:1903.11696 [stat.ML]}.
 
 Schwarz, G.E. (1978). Estimating the dimension of a model. Annals of Statistics, 6:461--464.
 }

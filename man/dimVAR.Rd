@@ -45,6 +45,7 @@ Returns an object of class \code{list}.
 Ledermann, W. (1937). On the rank of the reduced correlational matrix in multiple factor analysis. Psychometrika, 2:85--93.
 
 Peeters, C.F.W. \emph{et al.} (2019). Stable prediction with radiomics data.
+\href{https://arxiv.org/abs/1903.11696}{arXiv:1903.11696 [stat.ML]}.
 }
 \author{
 Carel F.W. Peeters <cf.peeters@vumc.nl>

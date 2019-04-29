@@ -42,6 +42,7 @@ Kaiser, H.F., & Rice., J. (1974). Little jiffy, mark IV. Educational and Pscyhol
 34:111--117.
 
 Peeters, C.F.W. \emph{et al.} (2019). Stable prediction with radiomics data.
+\href{https://arxiv.org/abs/1903.11696}{arXiv:1903.11696 [stat.ML]}.
 }
 \author{
 Carel F.W. Peeters <cf.peeters@vumc.nl>

@@ -52,6 +52,7 @@ Bartlett, M.S. (1937). The statistical conception of mental factors. British Jou
 28:97--104.
 
 Peeters, C.F.W. \emph{et al.} (2019). Stable prediction with radiomics data.
+\href{https://arxiv.org/abs/1903.11696}{arXiv:1903.11696 [stat.ML]}.
 
 Thomson, G. (1939). The Factorial Analysis of Human Ability. London: University of Londen
 Press.
