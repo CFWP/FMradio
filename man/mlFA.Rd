@@ -27,7 +27,7 @@ The output can be used to produce factor scores by the \code{\link{facScore}} fu
 }
 \value{
 The function returns an object of class \code{list}:
-\item{$Loadings}{A matrix of class \code{loadings} representing the loadings matrix in which in which each element \eqn{\lambda_{jk}} is the loading of the \eqn{j}th feature on the \eqn{k}th latent factor}
+\item{$Loadings}{A matrix of class \code{loadings} representing the loadings matrix in which in which each element \eqn{\lambda_{jk}} is the loading of the \eqn{j}th feature on the \eqn{k}th latent factor.}
 \item{$Uniqueness}{A \code{matrix} representing the diagonal matrix carrying the unique variances.}
 \item{$rotmatrix}{A \code{matrix} representing the Varimax rotation matrix.}
 }

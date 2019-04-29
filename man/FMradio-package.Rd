@@ -78,6 +78,10 @@ The \code{dimLRT} and \code{dimIC} functions provide alternative options for ass
 These are only recommended when the sample size is large relative to the number of features.
 \code{FAsim} provides a flexible function for generating data according to the orthogonal common factor analytic model. 
 All these functions may be of use in comparative exercises.
+The package also provides a wrapper function that automates the 3 main steps of the workflow:
+\itemize{
+  \item \code{\link{autoFMradio}}
+}
 }
 \author{
 Carel F.W. Peeters [cre, aut]\cr
