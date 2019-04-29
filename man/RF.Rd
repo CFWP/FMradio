@@ -7,7 +7,7 @@ Redundancy filtering of a square (correlation) matrix
 \code{RF} is a function that performs redundancy filtering (RF) of a square (correlation) matrix.
 }
 \usage{
-RF(R, t = .9)
+RF(R, t = .95)
 }
 \arguments{
   \item{R}{

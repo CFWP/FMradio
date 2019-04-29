@@ -373,7 +373,7 @@ radioHeat <- function(R, lowColor = "blue", highColor = "red", labelsize = 10,
 ##
 ##------------------------------------------------------------------------------
 
-RF <- function(R, t = .9){
+RF <- function(R, t = .95){
   ##############################################################################
   # Performs redundancy filtering (RF) of square (correlation) matrix
   # R > (correlation) matrix
@@ -1247,6 +1247,153 @@ facSMC <- function(R, LM){
   
   # Determine squared multiple correlations for predicting factors
   return(diag(t(LM) %*% solve(R) %*% LM))
+}
+
+
+
+
+##------------------------------------------------------------------------------
+##
+## Function for Automatic Full Monty
+##
+##------------------------------------------------------------------------------
+
+autoFMradio <- function(X, t = .95, fold = 5, GB = 1, type = "thomson",
+                        verbose = TRUE, printInfo = TRUE, seed = NULL){
+  ##############################################################################
+  # Function that automatically performs the 3 main steps of the FMradio
+  # workflow with minimal user input
+  # X         > data matrix or expression set
+  # t         > absolute value for thresholding
+  # fold      > cross-validation fold, default gives 5-fold CV
+  # GB        > numerical indication of which Guttman bound to use
+  # type      > character indicating the type of factor score to calculate
+  # verbose   > logical indicating if function should run silently
+  # printInfo > logical indicating if (run) information should be printed
+  #             on-screen
+  # seed      > set seed for random number generator
+  #
+  # NOTES:
+  # - Function performs the full monty, working on the correlation scale
+  # - If X is a matrix, the observations are expected to be in the rows
+  # - t should satisfy -1 < t < 1
+  # - If seed = NULL then the starting seed is determined by drawing a single
+  #   integer from the integers 1:9e5
+  ##############################################################################  
+  
+  # Dependencies:
+  # require("base")
+  # require("Biobase")
+  # require("stats")
+  # require("expm")
+  
+  # Checks
+  if (class(X) != "matrix" & class(X) != "ExpressionSet"){
+    stop("Input (X) should be either of class 'matrix' or 'ExpressionSet'")
+  }
+  if (class(X) == "ExpressionSet"){
+    X <- t(exprs(X))
+  }
+  if (class(t) != "numeric"){
+    stop("Input (t) is of wrong class")
+  }
+  if (length(t) != 1){
+    stop("Length input (t) must be one")
+  }
+  if (class(fold) != "numeric" & class(fold) != "integer"){ 
+    stop("Input (fold) is of wrong class") 
+  }
+  if (fold <=  1){ 
+    stop("Input (fold) should be at least 2") 
+  }
+  if (fold > nrow(X)){ 
+    stop("Input (fold) cannot exceed the sample size") 
+  }
+  GB <- as.integer(GB)
+  if (length(GB) != 1){
+    stop("Length input (GB) must be one")
+  }
+  if (!(GB %in% as.integer(c(1,2,3)))){
+    stop("Input (GB) must be either 1, 2, or 3")
+  }
+  if (!(type %in% c("thomson", "bartlett", "anderson"))){
+    stop("Input (type) should be one of {'thomson', 'bartlett', 'anderson'}")
+  }
+  if (class(verbose) != "logical"){ 
+    stop("Input (verbose) is of wrong class") 
+  }
+  if (class(printInfo) != "logical"){ 
+    stop("Input (printInfo) is of wrong class") 
+  }
+  
+  # Preliminaries
+  Rraw <- cor(X)
+  if (is.null(seed)){
+    seed <- sample(1:9e5, 1)
+  }
+  set.seed(seed)
+  
+  # Redundancy filtering
+  if (verbose){cat("Step 1.1: Performing redundancy filtering...", "\n")}
+  Rfilter <- RF(Rraw, t = t)
+  Xfilter <- subSet(X, Rfilter)
+  
+  # Regularized correlation matrix
+  if (verbose){cat("Step 1.2: Calculating regularized correlation matrix...", "\n")}
+  Rreg <- regcor(Xfilter, fold = fold, verbose = FALSE)
+  
+  # Assessing latent dimensionality
+  if (verbose){cat("Step 2.1: Assessing latent dimensionality...", "\n")}
+  m <- dimGB(Rreg$optCor, graph = FALSE, verbose = FALSE)[GB]
+  
+  # Maximum likelihood factor analysis
+  if (verbose){cat("Step 2.2: Performing ML factor analysis...", "\n")}
+  FA <- mlFA(Rreg$optCor, m = m)
+  
+  # Computing factor scores
+  if (verbose){cat("Step 3: Computing factor scores...", "\n")}
+  Scores <- facScore(Xfilter, FA$Loadings, FA$Uniqueness, type = type)
+  
+  # Computing additional information
+  p      <- dim(Xfilter)[2]
+  SMC    <- facSMC(Rreg$optCor, FA$Loadings)
+  SS     <- diag(t(FA$Loadings)%*%(FA$Loadings))
+  PV     <- SS/p
+  CV     <- cumsum(PV)
+  
+  # Printing information
+  if (printInfo){
+    if (GB == as.integer(1)){GBc <- "first"}
+    if (GB == as.integer(2)){GBc <- "second"}
+    if (GB == as.integer(3)){GBc <- "third"}
+    cat("\n")
+    cat("\n")
+    cat("Step 1: \n")
+    cat(paste("Redundancy filtering at threshold value:", t, "\n"))
+    cat(paste("      Features retained after filtering:", p, "\n"))
+    cat(paste("    Number of folds in cross-validation:", fold, "\n"))
+    cat(paste("        Optimal value penalty parameter:", Rreg$optPen, "\n"))
+    cat("Step 2: \n")
+    cat(paste("Number of latent factors determined by:", GBc, "Guttman bound", "\n"))
+    cat(paste("              Number of latent factors:", m, "\n"))
+    cat(paste("      Proportion of explained variance:", CV[m], "\n"))
+    cat("Step 3: \n")
+    cat(paste("    Type of factor score returned:", type, "\n"))
+    cat(paste("Minimum determinacy factor scores:", min(SMC), "\n"))
+  }
+  
+  # Return
+  return(list(Scores = Scores,
+              FilteredData = Xfilter,
+              FilteredCor = Rfilter,
+              optPen = Rreg$optPen,
+              optCor = Rreg$optCor,
+              m = m,
+              Loadings = FA$Loadings, 
+              Uniqueness = FA$Uniqueness,
+              Exvariance = CV,
+              determinacy = SMC,
+              used.seed = seed))
 }
 
 
