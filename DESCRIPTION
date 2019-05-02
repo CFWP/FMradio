@@ -4,7 +4,7 @@ Title: Factor Modeling for Radiomics Data
 Version: 1.1
 Maintainer: Carel F.W. Peeters <cf.peeters@vumc.nl>
 Author: Carel F.W. Peeters [cre, aut], Caroline Ubelhor [ctb]
-Description: Functions that support stable prediction and classification with radiomics data through factor-analytic modeling.
+Description: Functions that support stable prediction and classification with radiomics data through factor-analytic modeling. For details, see Peeters et al. (2019) <arXiv:1903.11696>.
 Depends: R (>= 2.15.1)
 Imports: stats, ggplot2, reshape, Biobase, graphics, expm, MASS
 ByteCompile: true
