@@ -2,6 +2,9 @@
 
 
 [![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
+[![CRAN version](http://www.r-pkg.org/badges/version/FMradio)](https://cran.r-project.org/package=FMradio)
+[![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/FMradio)](https://cran.r-project.org/package=FMradio/index.html)
+[![Total CRAN downloads](http://cranlogs.r-pkg.org/badges/grand-total/FMradio)](http://www.r-pkg.org/pkg/FMradio)
 
 
 **FMradio**
