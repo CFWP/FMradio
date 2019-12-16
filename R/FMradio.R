@@ -450,7 +450,7 @@ subSet <- function(X, Rf){
   # require("Biobase")
   
   # Checks
-  if (class(X) != "matrix" & class(X) != "ExpressionSet"){
+  if (!inherits(X, "matrix") & !inherits(X, "ExpressionSet")){
     stop("Input (X) should be either of class 'matrix' or 'ExpressionSet'")
   }
   if (!is.matrix(Rf)){
@@ -1288,7 +1288,7 @@ autoFMradio <- function(X, t = .95, fold = 5, GB = 1, type = "thomson",
   # require("expm")
   
   # Checks
-  if (class(X) != "matrix" & class(X) != "ExpressionSet"){
+  if (!inherits(X, "matrix") & !inherits(X, "ExpressionSet")){
     stop("Input (X) should be either of class 'matrix' or 'ExpressionSet'")
   }
   if (class(X) == "ExpressionSet"){
