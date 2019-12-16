@@ -14,8 +14,8 @@
 ##             Amsterdam, the Netherlands
 ## Email:	     cf.peeters@vumc.nl
 ##
-## Version: 1.1
-## Last Update:	29/04/2019
+## Version: 1.1.1
+## Last Update:	16/12/2019
 ## Description:	Pipeline (support) for prediction with radiomic data compression
 ##
 ################################################################################
