@@ -461,11 +461,11 @@ subSet <- function(X, Rf){
   }
   
   # Filter
-  if (class(X) == "matrix"){
+  if (inherits(X, "matrix")){
     These <- which(colnames(X) %in% colnames(Rf))
     return(X[,These])
   }
-  if (class(X) == "ExpressionSet"){
+  if (inherits(X, "ExpressionSet")){
     These <- which(featureNames(X) %in% colnames(Rf))
     return(X[These,])
   }
@@ -1291,7 +1291,7 @@ autoFMradio <- function(X, t = .95, fold = 5, GB = 1, type = "thomson",
   if (!inherits(X, "matrix") & !inherits(X, "ExpressionSet")){
     stop("Input (X) should be either of class 'matrix' or 'ExpressionSet'")
   }
-  if (class(X) == "ExpressionSet"){
+  if (inherits(X, "ExpressionSet")){
     X <- t(exprs(X))
   }
   if (class(t) != "numeric"){
