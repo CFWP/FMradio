@@ -55,7 +55,7 @@ radioHeat(R, lowColor = "blue", highColor = "red", labelsize = 10,
 This function utilizes \href{https://cran.r-project.org/package=ggplot2}{ggplot2} (Wickham, 2009) to visualize a matrix as a heatmap: a false color plot in which the individual matrix entries are represented by colors. 
 \code{lowColor} determines the color scale for matrix entries in the negative range.
 \code{highColor} determines the color scale for matrix entries in the positive range. 
-For the colors supported by the arguments \code{lowColor} and \code{highColor}, see \url{www.stat.columbia.edu/~tzheng/files/Rcolor.pdf}. 
+For the colors supported by the arguments \code{lowColor} and \code{highColor}, see \url{https://stat.columbia.edu/~tzheng/files/Rcolor.pdf}. 
 White entries in the plot represent the midscale value of 0. 
 One can opt to set the diagonal entries to the midscale color of white when one is interested in (heatmapping) the off-diagonal elements only. 
 To achieve this, set \code{diag = FALSE}. 
