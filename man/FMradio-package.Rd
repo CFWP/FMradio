@@ -85,7 +85,8 @@ The package also provides a wrapper function that automates the 3 main steps of 
 }
 \author{
 Carel F.W. Peeters [cre, aut]\cr
-Caroline Ubelhor [ctb]
+Caroline Ubelhor [ctb]\cr
+Kevin Kunzmann [ctb]
 \cr
 \cr
 \emph{Maintainer}: Carel F.W. Peeters <cf.peeters@vumc.nl>
