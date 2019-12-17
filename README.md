@@ -37,7 +37,7 @@ Relevant publications to **FMradio** include:
 
  1. Peeters, C.F.W. (2019). 
     *"FMradio: Factor modeling for radiomic data"*. 
-    R package, version 1.1
+    R package, version 1.1.1
  2. Peeters, C.F.W., *et al*. (2019)
     *"Stable prediction with radiomics data"*.
     [arXiv:1903.11696 [stat.ML]](https://arxiv.org/abs/1903.11696)
