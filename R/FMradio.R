@@ -15,7 +15,7 @@
 ## Email:	     cf.peeters@vumc.nl
 ##
 ## Version: 1.1.1
-## Last Update:	16/12/2019
+## Last Update:	08/09/2020
 ## Description:	Pipeline (support) for prediction with radiomic data compression
 ##
 ################################################################################
@@ -1112,7 +1112,7 @@ mlFA <- function(R, m){
   if (length(m) != 1){
     stop("Length input (m) must be one")
   }
-  if (m <= 1){
+  if (m < 1){
     stop("Input (m) cannot be lower than 1")
   }
   if (m > mmax){
