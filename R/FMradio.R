@@ -14,7 +14,7 @@
 ##             Amsterdam, the Netherlands
 ## Email:	     cf.peeters@vumc.nl
 ##
-## Version: 1.1.1
+## Version: 1.1.2
 ## Last Update:	08/09/2020
 ## Description:	Pipeline (support) for prediction with radiomic data compression
 ##
@@ -1123,12 +1123,17 @@ mlFA <- function(R, m){
   fit <- factanal(factors = m, covmat = R, rotation = "varimax")
   
   # Return
-  rotmatrix <- fit$rotmat
-  rownames(rotmatrix) <- colnames(fit$loadings)
-  colnames(rotmatrix) <- rownames(rotmatrix)
-  return(list(Loadings = fit$loadings, 
-              Uniqueness = diag(fit$uniquenesses),
-              rotmatrix = rotmatrix))
+  if (m == 1){
+    return(list(Loadings = fit$loadings, 
+                Uniqueness = diag(fit$uniquenesses)))
+  } else {
+    rotmatrix <- fit$rotmat
+    rownames(rotmatrix) <- colnames(fit$loadings)
+    colnames(rotmatrix) <- rownames(rotmatrix)
+    return(list(Loadings = fit$loadings, 
+                Uniqueness = diag(fit$uniquenesses),
+                rotmatrix = rotmatrix))
+  }
 }
 
 
