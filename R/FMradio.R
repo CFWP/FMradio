@@ -266,19 +266,19 @@ radioHeat <- function(R, lowColor = "blue", highColor = "red", labelsize = 10,
   if (!is.matrix(R)){
     stop("Supply 'R' as matrix")
   }
-  if (class(lowColor) != "character"){
+  if (!inherits(lowColor, "character")){
     stop("Input (lowColor) is of wrong class")
   }
   if (length(lowColor) != 1){
     stop("Length lowColor must be one")
   }
-  if (class(highColor) != "character"){
+  if (!inherits(highColor, "character")){
     stop("Input (highColor) is of wrong class")
   }
   if (length(highColor) != 1){
     stop("Length highColor must be one")
   }
-  if (class(labelsize) != "numeric"){
+  if (!inherits(labelsize, "numeric")){
     stop("Input (labelsize) is of wrong class")
   }
   else if (length(labelsize) != 1){
@@ -287,19 +287,19 @@ radioHeat <- function(R, lowColor = "blue", highColor = "red", labelsize = 10,
   if (labelsize <= 0){
     stop("labelsize must be positive")
   }
-  if (class(diag) != "logical"){
+  if (!inherits(diag, "logical")){
     stop("Input (diag) is of wrong class")
   }
-  if (class(threshold) != "logical"){
+  if (!inherits(threshold, "logical")){
     stop("Input (threshold) is of wrong class")
   }
-  if (class(legend) != "logical"){
+  if (!inherits(legend, "logical")){
     stop("Input (legend) is of wrong class")
   }
-  if (class(main) != "character"){
+  if (!inherits(main, "character")){
     stop("Input (main) is of wrong class")
   }
-  if (class(values) != "logical"){
+  if (!inherits(values, "logical")){
     stop("Input (values) is of wrong class")
   }
   
@@ -391,7 +391,7 @@ RF <- function(R, t = .95){
   if (nrow(R) != ncol(R)){
     stop("Input (R) should be square matrix")
   }
-  if (class(t) != "numeric"){
+  if (!inherits(t, "numeric")){
     stop("Input (t) is of wrong class")
   }
   if (length(t) != 1){
@@ -499,7 +499,7 @@ regcor <- function(X, fold = 5, verbose = TRUE){
   if (!is.matrix(X)){
     stop("Input (X) should be a matrix")
   }
-  if (class(fold) != "numeric" & class(fold) != "integer"){ 
+  if (!inherits(fold, "numeric") & !inherits(fold, "integer")){
     stop("Input (fold) is of wrong class") 
   }
   if (fold <=  1){ 
@@ -508,7 +508,7 @@ regcor <- function(X, fold = 5, verbose = TRUE){
   if (fold > nrow(X)){ 
     stop("Input (fold) cannot exceed the sample size") 
   }
-  if (class(verbose) != "logical"){ 
+  if (!inherits(verbose, "logical")){
     stop("Input (verbose) is of wrong class") 
   }
   
@@ -615,10 +615,10 @@ dimGB <- function(R, graph = TRUE, verbose = TRUE){
   if (nrow(R) != ncol(R)){
     stop("Input (R) should be square matrix")
   }
-  if (class(graph) != "logical"){ 
+  if (!inherits(graph, "logical")){ 
     stop("Input (graph) is of wrong class") 
   }
-  if (class(verbose) != "logical"){ 
+  if (!inherits(verbose, "logical")){ 
     stop("Input (verbose) is of wrong class") 
   }
   
@@ -706,7 +706,7 @@ dimIC <- function(R, n, maxdim, Type = "BIC", graph = TRUE, verbose = TRUE){
   if (nrow(R) != ncol(R)){
     stop("Input (R) should be square matrix")
   }
-  if (class(n) != "numeric" & class(n) != "integer"){
+  if (!inherits(n, "numeric") & !inherits(n, "integer")){ 
     stop("Input (n) is of wrong class")
   }
   if (length(n) != 1){
@@ -715,7 +715,7 @@ dimIC <- function(R, n, maxdim, Type = "BIC", graph = TRUE, verbose = TRUE){
   if (n <= 1){
     stop("Input (n) must be a strictly positive (numeric) integer")
   }
-  if (class(maxdim) != "numeric" & class(maxdim) != "integer"){
+  if (!inherits(maxdim, "numeric") & !inherits(maxdim, "integer")){ 
     stop("Input (maxdim) is of wrong class")
   }
   if (length(maxdim) != 1){
@@ -730,10 +730,10 @@ dimIC <- function(R, n, maxdim, Type = "BIC", graph = TRUE, verbose = TRUE){
   if (!(Type %in% c("BIC", "AIC"))){
     stop("Input (Type) should be one of {'BIC', 'AIC'}")
   }
-  if (class(graph) != "logical"){ 
+  if (!inherits(graph, "numeric")){ 
     stop("Input (graph) is of wrong class") 
   }
-  if (class(verbose) != "logical"){ 
+  if (!inherits(verbose, "logical")){ 
     stop("Input (verbose) is of wrong class") 
   }
   
@@ -823,7 +823,7 @@ dimLRT <- function(R, X, maxdim, rankDOF = TRUE, graph = TRUE,
   mmax <- floor((2*p + 1 - sqrt(8*p + 1))/2)
   
   # (Conditional) Checks
-  if (class(maxdim) != "numeric" & class(maxdim) != "integer"){
+  if (!inherits(maxdim, "numeric") & !inherits(maxdim, "integer")){ 
     stop("Input (maxdim) is of wrong class")
   }
   if (length(maxdim) != 1){
@@ -835,14 +835,14 @@ dimLRT <- function(R, X, maxdim, rankDOF = TRUE, graph = TRUE,
   if (maxdim > mmax){
     stop("Input (maxdim) is too high")
   }
-  if (class(rankDOF) != "logical"){ 
+  if (!inherits(rankDOF, "logical")){ 
     stop("Input (rankDOF) is of wrong class") 
   }
-  if (class(graph) != "logical"){ 
+  if (!inherits(graph, "logical")){ 
     stop("Input (graph) is of wrong class") 
   }
   if (graph){
-    if (class(alpha) != "numeric"){
+    if (!inherits(alpha, "numeric")){
       stop("Input (alpha) is of wrong class") 
     }
     if (length(alpha) != 1){
@@ -855,10 +855,10 @@ dimLRT <- function(R, X, maxdim, rankDOF = TRUE, graph = TRUE,
       stop("Input (alpha) cannot exceed unity") 
     }
   }
-  if (class(Bartlett) != "logical"){ 
+  if (!inherits(Bartlett, "logical")){ 
     stop("Input (Bartlett) is of wrong class") 
   }
-  if (class(verbose) != "logical"){ 
+  if (!inherits(verbose, "logical")){ 
     stop("Input (verbose) is of wrong class") 
   }
   if (p >= n & rankDOF == TRUE){
@@ -1000,7 +1000,7 @@ dimVAR <- function(R, maxdim, graph = TRUE, verbose = TRUE){
   if (nrow(R) != ncol(R)){
     stop("Input (R) should be square matrix")
   }
-  if (class(maxdim) != "numeric" & class(maxdim) != "integer"){
+  if (!inherits(maxdim, "numeric") & !inherits(maxdim, "integer")){ 
     stop("Input (maxdim) is of wrong class")
   }
   if (length(maxdim) != 1){
@@ -1012,10 +1012,10 @@ dimVAR <- function(R, maxdim, graph = TRUE, verbose = TRUE){
   if (maxdim > mmax){
     stop("Input (maxdim) is too high")
   }
-  if (class(graph) != "logical"){ 
+  if (!inherits(graph, "logical")){ 
     stop("Input (graph) is of wrong class") 
   }
-  if (class(verbose) != "logical"){ 
+  if (!inherits(verbose, "logical")){ 
     stop("Input (verbose) is of wrong class") 
   }
   
@@ -1103,7 +1103,7 @@ mlFA <- function(R, m){
   if (nrow(R) != ncol(R)){
     stop("Input (R) should be square matrix")
   }
-  if (class(m) != "numeric" & class(m) != "integer"){
+  if (!inherits(m, "numeric") & !inherits(m, "integer")){
     stop("Input (m) is of wrong class")
   }
   if (length(m) != 1){
@@ -1296,13 +1296,13 @@ autoFMradio <- function(X, t = .95, fold = 5, GB = 1, type = "thomson",
   if (inherits(X, "ExpressionSet")){
     X <- t(exprs(X))
   }
-  if (class(t) != "numeric"){
+  if (!inherits(t, "numeric")){
     stop("Input (t) is of wrong class")
   }
   if (length(t) != 1){
     stop("Length input (t) must be one")
   }
-  if (class(fold) != "numeric" & class(fold) != "integer"){ 
+  if (!inherits(fold, "numeric") & !inherits(fold, "integer")){ 
     stop("Input (fold) is of wrong class") 
   }
   if (fold <=  1){ 
@@ -1321,10 +1321,10 @@ autoFMradio <- function(X, t = .95, fold = 5, GB = 1, type = "thomson",
   if (!(type %in% c("thomson", "bartlett", "anderson"))){
     stop("Input (type) should be one of {'thomson', 'bartlett', 'anderson'}")
   }
-  if (class(verbose) != "logical"){ 
+  if (!inherits(verbose, "logical")){ 
     stop("Input (verbose) is of wrong class") 
   }
-  if (class(printInfo) != "logical"){ 
+  if (!inherits(printInfo, "logical")){ 
     stop("Input (printInfo) is of wrong class") 
   }
   
@@ -1459,7 +1459,7 @@ FAsim <- function(p, m, n, simplestructure = TRUE, balanced = TRUE,
   # require("MASS")
   
   # Checks
-  if (class(p) != "numeric" & class(p) != "integer"){ 
+  if (!inherits(p, "numeric") & !inherits(p, "integer")){ 
     stop("Input (p) is of wrong class") 
   }
   if (p <=  1){ 
@@ -1468,7 +1468,7 @@ FAsim <- function(p, m, n, simplestructure = TRUE, balanced = TRUE,
   if (length(p) != 1){
     stop("Length input (p) must be one")
   }
-  if (class(m) != "numeric" & class(m) != "integer"){ 
+  if (!inherits(m, "numeric") & !inherits(m, "integer")){ 
     stop("Input (m) is of wrong class") 
   }
   if (m <=  0){ 
@@ -1481,7 +1481,7 @@ FAsim <- function(p, m, n, simplestructure = TRUE, balanced = TRUE,
   if (m > mmax){
     stop("Input (m) is too high")
   }
-  if (class(n) != "numeric" & class(n) != "integer"){ 
+  if (!inherits(n, "numeric") & !inherits(n, "integer")){ 
     stop("Input (n) is of wrong class") 
   }
   if (n <=  1){ 
@@ -1490,28 +1490,28 @@ FAsim <- function(p, m, n, simplestructure = TRUE, balanced = TRUE,
   if (length(n) != 1){
     stop("Length input (n) must be one")
   }
-  if (class(simplestructure) != "logical"){ 
+  if (!inherits(simplestructure, "logical")){ 
     stop("Input (simplestructure) is of wrong class") 
   }
-  if (class(balanced) != "logical"){ 
+  if (!inherits(balanced, "logical")){ 
     stop("Input (balanced) is of wrong class") 
   }
-  if (class(loadingfix) != "logical"){ 
+  if (!inherits(loadingfix, "logical")){ 
     stop("Input (loadingfix) is of wrong class") 
   }
-  if (class(loadingnegative) != "logical"){ 
+  if (!inherits(loadingnegative, "logical")){ 
     stop("Input (loadingnegative) is of wrong class") 
   }
   
   # Conditional checks
   if (loadingfix){
-    if (class(loadingvalue) != "numeric"){ 
+    if (!inherits(loadingvalue, "numeric")){ 
       stop("Input (loadingvalue) is of wrong class") 
     }
     if (length(loadingvalue) != 1){ 
       stop("Length input (loadingvalue) must be one") 
     }
-    if (class(loadingvaluelow) != "numeric"){ 
+    if (!inherits(loadingvaluelow, "numeric")){ 
       stop("Input (loadingvaluelow) is of wrong class") 
     }
     if (length(loadingvaluelow) != 1){ 
@@ -1519,26 +1519,26 @@ FAsim <- function(p, m, n, simplestructure = TRUE, balanced = TRUE,
     }
   }
   if (!loadingfix){
-    if (class(loadinglowerH) != "numeric"){ 
+    if (!inherits(loadinglowerH, "numeric")){ 
       stop("Input (loadinglowerH) is of wrong class") 
     }
     if (length(loadinglowerH) != 1){ 
       stop("Length input (loadinglowerH) must be one") 
     }
-    if (class(loadingupperH) != "numeric"){ 
+    if (!inherits(loadingupperH, "numeric")){ 
       stop("Input (loadingupperH) is of wrong class") 
     }
     if (length(loadingupperH) != 1){ 
       stop("Length input (loadingupperH) must be one") 
     }
     if (!simplestructure){
-      if (class(loadinglowerL) != "numeric"){ 
+      if (!inherits(loadinglowerL, "numeric")){ 
         stop("Input (loadinglowerL) is of wrong class") 
       }
       if (length(loadinglowerL) != 1){ 
         stop("Length input (loadinglowerL) must be one") 
       }
-      if (class(loadingupperL) != "numeric"){ 
+      if (!inherits(loadingupperL, "numeric")){ 
         stop("Input (loadingupperL) is of wrong class") 
       }
       if (length(loadingupperL) != 1){ 
@@ -1547,7 +1547,7 @@ FAsim <- function(p, m, n, simplestructure = TRUE, balanced = TRUE,
     }
   }
   if (!balanced){
-    if (class(numloadings) != "numeric" & class(numloadings) != "integer"){
+    if (!inherits(numloadings, "numeric") & !inherits(numloadings, "integer")){ 
       stop("Input (numloadings) is of wrong class") 
     }
     if (length(numloadings) != m){
