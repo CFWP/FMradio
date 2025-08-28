@@ -43,7 +43,7 @@ autoFMradio(X, t = .95, fold = 5, GB = 1, type = "thomson",
 \details{
 The \code{autoFMradio} function automates the three main steps of the workflow by providing a wrapper around all core functions.
 
-Step 1 (regularized correlation matrix estimation) is performed using the \code{X}, \code{t}, and {fold} arguments.
+Step 1 (regularized correlation matrix estimation) is performed using the \code{X}, \code{t}, and \code{fold} arguments.
 The raw correlation matrix based on data \code{X} is redundancy-filtered using the threshold provided in \code{t}.
 Subsequently, a regularized estimate of the correlation matrix (on the possibly filtered feature set) is computed with the optimal penalty value determined by cross-validation.
 The number of folds is set by the \code{fold} argument.
