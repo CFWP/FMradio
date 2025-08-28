@@ -70,7 +70,7 @@ This enables easier visual access to (blocks of) collinearity in radiomic-featur
 Wickham, H. (2009). ggplot2: elegant graphics for data analysis. New York: Springer.
 }
 \author{
-Carel F.W. Peeters <cf.peeters@vumc.nl>
+Carel F.W. Peeters <carel.peeters@wur.nl>
 }
 \note{
 \itemize{

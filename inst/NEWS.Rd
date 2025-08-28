@@ -13,4 +13,10 @@
       }
     }
   }
+  \subsection{Minor fixes:}{
+    \itemize{
+      \item Updated affiliation
+      \item Fixed referral to arXiv preprint in description field
+    }
+  }
 }

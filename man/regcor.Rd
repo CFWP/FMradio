@@ -49,7 +49,7 @@ Peeters, C.F.W. \emph{et al.} (2019). Stable prediction with radiomics data.
 Peeters, C.F.W., van de Wiel, M.A., & van Wieringen, W.N. (2016). The spectral condition number plot for regularization parameter determination, arXiv:1608.04123v1 [stat.CO].
 }
 \author{
-Carel F.W. Peeters <cf.peeters@vumc.nl>
+Carel F.W. Peeters <carel.peeters@wur.nl>
 }
 \note{
 Note that, for argument \code{X}, the observations are expected to be in the rows and the features are expected to be in the columns.

@@ -58,7 +58,7 @@ Thomson, G. (1939). The Factorial Analysis of Human Ability. London: University 
 Press.
 }
 \author{
-Carel F.W. Peeters <cf.peeters@vumc.nl>
+Carel F.W. Peeters <carel.peeters@wur.nl>
 }
 \note{
 The input data (argument \code{X}) are assumed to be scaled (or at least centered).

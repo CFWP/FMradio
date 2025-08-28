@@ -89,7 +89,7 @@ Caroline Ubelhor [ctb]\cr
 Kevin Kunzmann [ctb]
 \cr
 \cr
-\emph{Maintainer}: Carel F.W. Peeters <cf.peeters@vumc.nl>
+\emph{Maintainer}: Carel F.W. Peeters <carel.peeters@wur.nl>
 }
 \references{
 Peeters, C.F.W. \emph{et al.} (2019). Stable prediction with radiomics data.

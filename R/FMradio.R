@@ -6,16 +6,13 @@
 ## Author: Carel F.W. Peeters
 ##
 ## Maintainer: Carel F.W. Peeters
-##             Statistics for Omics Research Unit
-##             Dept. of Epidemiology & Biostatistics
-##             Amsterdam Public Health research institute
-##             Amsterdam University medical centers,
-##             Location VU University medical center
-##             Amsterdam, the Netherlands
-## Email:	     cf.peeters@vumc.nl
+##             Mathematical & Statistical Methods group - Biometris
+##             Wageningen University & Research
+##             Wageningen, the Netherlands
+## Email:	     carel.peeters@wur.nl
 ##
 ## Version: 1.1.2
-## Last Update:	08/09/2020
+## Last Update:	28/08/2025
 ## Description:	Pipeline (support) for prediction with radiomic data compression
 ##
 ################################################################################

@@ -62,7 +62,7 @@ Peeters, C.F.W. \emph{et al.} (2019). Stable prediction with radiomics data.
 Schwarz, G.E. (1978). Estimating the dimension of a model. Annals of Statistics, 6:461--464.
 }
 \author{
-Carel F.W. Peeters <cf.peeters@vumc.nl>
+Carel F.W. Peeters <carel.peeters@wur.nl>
 }
 \note{
 \itemize{
