@@ -305,7 +305,7 @@ radioHeat <- function(R, lowColor = "blue", highColor = "red", labelsize = 10,
   
   # Conditional checks
   if (threshold){
-    if(class(threshvalue) != "numeric"){
+    if(!inherits(threshvalue, "numeric")){ 
       stop("Input (threshvalue) is of wrong class")
     }
     if(length(threshvalue) != 1){
@@ -316,7 +316,7 @@ radioHeat <- function(R, lowColor = "blue", highColor = "red", labelsize = 10,
     }
   }
   if (values){
-    if(class(textsize) != "numeric"){
+    if(!inherits(textsize, "numeric")){ 
       stop("Input (textsize) is of wrong class")
     }
     if(length(textsize) != 1){
@@ -730,7 +730,7 @@ dimIC <- function(R, n, maxdim, Type = "BIC", graph = TRUE, verbose = TRUE){
   if (!(Type %in% c("BIC", "AIC"))){
     stop("Input (Type) should be one of {'BIC', 'AIC'}")
   }
-  if (!inherits(graph, "numeric")){ 
+  if (!inherits(graph, "logical")){ 
     stop("Input (graph) is of wrong class") 
   }
   if (!inherits(verbose, "logical")){ 
