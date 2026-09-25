@@ -3,6 +3,14 @@
 
 \title{News for Package \cpkg{FMradio}}
 
+\section{Changes in version 1.1.3}{
+  \subsection{Bug fixes:}{
+    \itemize{
+      \item Fixed bug in example to \code{dimLRT}
+    }
+  }
+}
+
 \section{Changes in version 1.1.2}{
   \subsection{Bug fixes:}{
     \itemize{

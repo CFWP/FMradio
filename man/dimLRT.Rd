@@ -102,8 +102,8 @@ Usually, one wants to set \code{maxdim} much lower than this bound.
 simDAT <- FAsim(p = 50, m = 5, n = 500)
 simDAT$cormatrix
 
-## Calculate the LRT for models of factor dimension 1 to 20
-LRT <- dimLRT(simDAT$cormatrix, simDAT$data, maxdim = 20, rankDOF = FALSE)
+## Calculate the LRT for models of factor dimension 1 to 15
+LRT <- dimLRT(simDAT$cormatrix, simDAT$data, maxdim = 15, rankDOF = FALSE)
 print(LRT)
 }
 \concept{Factor analytic likelihood ratio testing}

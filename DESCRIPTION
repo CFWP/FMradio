@@ -1,7 +1,7 @@
 Package: FMradio
 Type: Package
 Title: Factor Modeling for Radiomics Data
-Version: 1.1.2
+Version: 1.1.3
 Maintainer: Carel F.W. Peeters <carel.peeters@wur.nl>
 Authors@R: c(person(given = c("Carel", "F.W."),
                     family = "Peeters",
